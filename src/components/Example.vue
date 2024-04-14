@@ -101,7 +101,7 @@ onLoop(({delta, elapsed}) => {
 
 </script>
 <template>
-    <div class="tres-container ease-in duration-300 hover:scale-125">
+    <div class="tres-container ease-in duration-300 hover:scale-110">
     <TresCanvas v-bind="gl">
     <TresPerspectiveCamera :position="[100,108,250]" :look-at="[0,0,0]" class="cameraP"/>
     <OrbitControls />
