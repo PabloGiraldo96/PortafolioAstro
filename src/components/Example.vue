@@ -4,6 +4,7 @@ import { TresCanvas, useRenderLoop } from '@tresjs/core'
 import { BasicShadowMap, SRGBColorSpace, NoToneMapping } from 'three'
 import { OrbitControls, Stars } from '@tresjs/cientos'
 import { shallowRef, watchEffect } from 'vue';
+import Text from './Content.vue'
 
 
 const gl = {
@@ -14,6 +15,7 @@ const gl = {
   outputColorSpace: SRGBColorSpace,
   toneMapping: NoToneMapping,
 }
+
 
 const {onLoop} = useRenderLoop()
 
@@ -28,8 +30,6 @@ const geometryRefSix = shallowRef()
 
 onLoop(({delta, elapsed}) => {
 	if(geometryRef.value && geometryRefTwo.value && geometryRefThree.value && geometryRefFour.value&&geometryRefFive.value&&geometryRefSix.value){
-		//geometryRef.value.rotation.y += 0.05
-		//geometryRef.value.rotation.z = elapsed
 		geometryRef.value.position.set(0, 0, Math.sin(elapsed * -0.15) * 0.5);
 		//geometryRef.value.position.x = Math.sin(elapsed * 0.1) * 1
 		geometryRef.value.scale.set(
@@ -94,42 +94,45 @@ onLoop(({delta, elapsed}) => {
 <template>
     <div class="tres-container">
     <TresCanvas v-bind="gl">
-    <TresPerspectiveCamera :position="[1,1,1]" :look-at="[0,-2,0]" />
+    <TresPerspectiveCamera :position="[55,78,250]" :look-at="[0,0,0]" class="cameraP"/>
     <OrbitControls />
     <Stars />
     <Suspense>
       <TresMesh ref="geometryRef" transition:animate="slide">
-		  <TresBoxGeometry :args="[1, 1, 1, 1]" />  
+		  <TresBoxGeometry :args="[50, 50, 50, 50]" />  
           <TresMeshNormalMaterial />     
       </TresMesh>
     </Suspense>
     <Suspense>
     <TresMesh ref="geometryRefTwo">
-      <TresBoxGeometry :args="[2, 1, 1, 1]" />
+      <TresBoxGeometry :args="[50, 50, 50, 50]" />
       <TresMeshNormalMaterial />
     </TresMesh>
     </Suspense>
     <Suspense>
     <TresMesh ref="geometryRefThree">
-      <TresBoxGeometry :args="[2, 1, 1, 1]" />
+      <TresBoxGeometry :args="[50, 50, 50, 50]" />
       <TresMeshNormalMaterial />
     </TresMesh>
     </Suspense>
     <Suspense>
     <TresMesh ref="geometryRefFour">
-      <TresBoxGeometry :args="[1, 1, 1, 1]" />
+      <TresBoxGeometry :args="[50, 50, 50, 50]" />
       <TresMeshNormalMaterial />
     </TresMesh>
     </Suspense>
     <Suspense>
+     <Text />
+    </Suspense>
+    <Suspense>
     <TresMesh ref="geometryRefFive">
-      <TresBoxGeometry :args="[1, 1, 1, 1]" />
+      <TresBoxGeometry :args="[50, 50, 50, 50]" />
       <TresMeshNormalMaterial />
     </TresMesh>
     </Suspense>
     <Suspense>
     <TresMesh ref="geometryRefSix">
-      <TresBoxGeometry :args="[1, 1, 1, 1]" />
+      <TresBoxGeometry :args="[50, 50, 50, 50]" />
       <TresMeshNormalMaterial />
     </TresMesh>
     </Suspense>
@@ -153,9 +156,19 @@ onLoop(({delta, elapsed}) => {
 <style>
 .tres-container {
   display: flex;
-  margin-bottom: -245px;
+  margin-bottom:-270px;
   z-index: 1;
   width: 100%;
-  height: 50vh;
+  height: 55vh;
 }
+
+ @media only screen and (max-width: 390px) {
+    .tres-container {
+      /* Modifica los estilos según tus necesidades para una mejor visualización en dispositivos móviles */
+      height: 90vh; /* Ajusta la altura para ocupar toda la pantalla */
+      flex-direction: column; /* Cambia la dirección del flexbox para apilar los elementos verticalmente */
+      margin-bottom: -250px; /* Elimina el margen inferior */
+    }
+
+  }
 </style>

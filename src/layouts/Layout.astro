@@ -2,7 +2,6 @@
 import Example from "../components/Example.vue";
 import Experience from "../components/Experience.astro"
 import Studies from "../components/Studies.astro";
-import Home from "../components/Home.astro";
 import Footer from "../components/Footer.astro";
 import Projects from "../components/Projects.astro";
 
@@ -20,12 +19,11 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/src/img/badLook.png" />
-		<meta name="generator" content={Astro.generator} />
+		<meta name="generator" content={Astro.generator}/>
 		<title>{title}</title>		
 	</head>
 	<body>
 		<Example/>
-		<Home />
 	<slot />
 		<Experience/>
 		<Studies/>
