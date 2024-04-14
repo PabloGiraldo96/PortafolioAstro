@@ -1,0 +1,30 @@
+{
+  "name": "zany-zenith",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/vue": "^4.0.10",
+    "@midudev/tailwind-animations": "^0.0.7",
+    "@tresjs/cientos": "^3.8.0",
+    "@tresjs/core": "^3.7.0",
+    "astro": "^4.5.12",
+    "tailwindcss": "^3.4.3",
+    "three": "^0.162.0",
+    "typescript": "^5.4.3",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@types/three": "^0.163.0",
+    "tailwindcss-animated": "^1.0.1",
+    "vite-plugin-glsl": "^1.1.2"
+  }
+}
