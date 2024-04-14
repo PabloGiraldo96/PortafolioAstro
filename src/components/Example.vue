@@ -19,6 +19,9 @@ const gl = {
 
 const {onLoop} = useRenderLoop()
 
+const radius = 3.4;
+const speed = 0.00750; 
+
 // ShallowRef de cada geometria, como cada geometria tiene diferentes animaciones, las voy a manejar por separado, 6 aproximadamente
 
 const geometryRef = shallowRef()
@@ -31,33 +34,30 @@ const geometryRefSix = shallowRef()
 onLoop(({delta, elapsed}) => {
 	if(geometryRef.value && geometryRefTwo.value && geometryRefThree.value && geometryRefFour.value&&geometryRefFive.value&&geometryRefSix.value){
 		geometryRef.value.position.set(22, 25, -50);
-		geometryRef.value.position.x = Math.sin(elapsed * 0.1) * 1
+		geometryRef.value.rotation.y += 0.005
+		geometryRef.value.rotation.x += radius * speed * 2
+		geometryRef.value.rotation.z = 0.004
 		geometryRef.value.scale.set(
 			Math.sin(elapsed) * .18 -0.1,
 			Math.sin(elapsed) * .20 -0.1,
 			Math.sin(elapsed) * .14 -0.1,)
 
 // Segunda geometria
-
+    geometryRefTwo.value.position.set(-100, 45, 75);
 		geometryRefTwo.value.rotation.y += 0.003
-		geometryRefTwo.value.rotation.x += 0.004
+		geometryRefTwo.value.rotation.x += radius * speed * 1/2
 		geometryRefTwo.value.rotation.z = elapsed
-		geometryRefTwo.value.position.y = Math.sin(-elapsed * 1.5) * 1
-		geometryRefTwo.value.position.x = Math.cos(elapsed * 0.1) * 1
-		geometryRefTwo.value.position.z = Math.sin(elapsed * 0.3) * 1
 		geometryRefTwo.value.scale.set(
 			Math.sin(elapsed) * .15 -0.1,
 			Math.sin(elapsed) * .15 -0.1,
-			Math.sin(elapsed) * .15 -0.1)
+			Math.sin(delta) * .15 -0.1)
 
 // Tercer geometria 
 
-		geometryRefThree.value.rotation.y += 0.003
-		geometryRefThree.value.rotation.x += 0.004
-		geometryRefThree.value.rotation.z = elapsed
-		geometryRefThree.value.position.y = Math.sin(elapsed * -1.5) * -1
-		geometryRefThree.value.position.x = Math.cos(-elapsed * 0.1) * -1
-		geometryRefThree.value.position.z = Math.sin(elapsed * 0.3) * -1
+		geometryRefThree.value.rotation.y += 0.005
+		geometryRefThree.value.rotation.x += radius * speed * 2
+		geometryRefThree.value.rotation.z = 0.004
+    geometryRefThree.value.position.set(100, 55, 95);
 		geometryRefThree.value.scale.set(
 			Math.sin(elapsed) * .15 -0.1,
 			Math.sin(elapsed) * .15 -0.1,
@@ -65,7 +65,10 @@ onLoop(({delta, elapsed}) => {
 
 // Cuarta geometria 
 
-	geometryRefFour.value.position.set(0, 0, Math.sin(elapsed * 1.15) * 0.75);
+	geometryRefFour.value.position.set(-50,-50, Math.sin(elapsed * 1.15) * 0.75);
+		geometryRefFour.value.rotation.y += 0.005
+		geometryRefFour.value.rotation.x += -radius * speed * 2
+		geometryRefFour.value.rotation.z = 0.004
 		geometryRefFour.value.scale.set(
 			Math.sin(elapsed) * .15 -0.1,
 			Math.sin(elapsed) * .15 -0.1,
@@ -73,7 +76,10 @@ onLoop(({delta, elapsed}) => {
 
   // Quinta geometria
 
-	geometryRefFive.value.position.set(1, 0, Math.sin(elapsed * 1.15) * 0.75);
+	geometryRefFive.value.position.set(10, 40, Math.sin(elapsed * 1.15) * 0.75);
+		geometryRefFive.value.rotation.y += 0.005
+		geometryRefFive.value.rotation.x += radius * speed * 3
+		geometryRefFive.value.rotation.z = 0.004
 		geometryRefFive.value.scale.set(
 			Math.sin(elapsed) * .15 -0.1,
 			Math.sin(elapsed) * .15 -0.1,
@@ -81,7 +87,10 @@ onLoop(({delta, elapsed}) => {
 
 // Sexta geometria
 
-	geometryRefSix.value.position.set(-1, 0, Math.sin(elapsed * 1.15) * 0.75);
+	  geometryRefSix.value.position.set(-1, 0, Math.sin(elapsed * 1.15) * 0.75);
+		geometryRefSix.value.rotation.y += 0.005
+		geometryRefSix.value.rotation.x += -radius * speed * 2.4
+		geometryRefSix.value.rotation.z = 0.004
 		geometryRefSix.value.scale.set(
 			Math.sin(elapsed) * .15 -0.1,
 			Math.sin(elapsed) * .15 -0.1,
@@ -92,9 +101,9 @@ onLoop(({delta, elapsed}) => {
 
 </script>
 <template>
-    <div class="tres-container">
+    <div class="tres-container ease-in duration-300 hover:scale-125">
     <TresCanvas v-bind="gl">
-    <TresPerspectiveCamera :position="[55,78,250]" :look-at="[0,0,0]" class="cameraP"/>
+    <TresPerspectiveCamera :position="[100,108,250]" :look-at="[0,0,0]" class="cameraP"/>
     <OrbitControls />
     <Stars />
     <Suspense>
