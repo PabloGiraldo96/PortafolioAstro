@@ -30,12 +30,12 @@ const geometryRefSix = shallowRef()
 
 onLoop(({delta, elapsed}) => {
 	if(geometryRef.value && geometryRefTwo.value && geometryRefThree.value && geometryRefFour.value&&geometryRefFive.value&&geometryRefSix.value){
-		geometryRef.value.position.set(0, 0, Math.sin(elapsed * -0.15) * 0.5);
-		//geometryRef.value.position.x = Math.sin(elapsed * 0.1) * 1
+		geometryRef.value.position.set(22, 25, -50);
+		geometryRef.value.position.x = Math.sin(elapsed * 0.1) * 1
 		geometryRef.value.scale.set(
-			Math.sin(elapsed) * .15 -0.1,
-			Math.sin(elapsed) * .15 -0.1,
-			Math.sin(elapsed) * .15 -0.1,)
+			Math.sin(elapsed) * .18 -0.1,
+			Math.sin(elapsed) * .20 -0.1,
+			Math.sin(elapsed) * .14 -0.1,)
 
 // Segunda geometria
 
@@ -165,10 +165,8 @@ onLoop(({delta, elapsed}) => {
  @media only screen and (max-width: 390px) {
     .tres-container {
       /* Modifica los estilos según tus necesidades para una mejor visualización en dispositivos móviles */
-      height: 90vh; /* Ajusta la altura para ocupar toda la pantalla */
-      flex-direction: column; /* Cambia la dirección del flexbox para apilar los elementos verticalmente */
-      margin-bottom: -250px; /* Elimina el margen inferior */
+      height: 100vh; /* Ajusta la altura para ocupar toda la pantalla */
+      margin-bottom: -430px; /* Elimina el margen inferior */
     }
-
   }
 </style>

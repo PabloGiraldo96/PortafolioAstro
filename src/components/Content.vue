@@ -1,6 +1,7 @@
 <script setup>
 import { useTexture } from '@tresjs/core'
 import { Text3D } from '@tresjs/cientos'
+
 const matcapTexture = await useTexture([
   'https://th.bing.com/th/id/OIP.7rd_bvr-joYRQkMm4yqmEAHaGe?w=549&h=480&rs=1&pid=ImgDetMain',
 ]);
@@ -44,7 +45,7 @@ const matcapTextureThree = await useTexture([
         <TresMeshMatcapMaterial :matcap="matcapTextureThree" />
     </Text3D>
     <Text3D
-        :position="[-135, -120, -60]"
+        :position="[-135, -150, -60]"
 		:size="19"
         ref="textRef"
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
