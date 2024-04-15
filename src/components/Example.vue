@@ -175,6 +175,7 @@ onLoop(({delta, elapsed}) => {
     .tres-container {
       /* Modifica los estilos según tus necesidades para una mejor visualización en dispositivos móviles */
       height: 100vh; /* Ajusta la altura para ocupar toda la pantalla */
+      flex-direction: column;
       margin-bottom: -430px; /* Elimina el margen inferior */
     }
   }
