@@ -164,19 +164,25 @@ onLoop(({delta, elapsed}) => {
 
 <style>
 .tres-container {
+  overflow-x: hidden;
   display: flex;
-  margin-bottom:-270px;
+  margin-bottom:-330px;
   z-index: 1;
   width: 100%;
-  height: 55vh;
+  height: 67vh;
 }
 
  @media only screen and (max-width: 390px) {
     .tres-container {
       /* Modifica los estilos según tus necesidades para una mejor visualización en dispositivos móviles */
-      height: 100vh; /* Ajusta la altura para ocupar toda la pantalla */
+      height: 120vh; /* Ajusta la altura para ocupar toda la pantalla */
       flex-direction: column;
-      margin-bottom: -430px; /* Elimina el margen inferior */
+      margin-bottom: -510px; /* Elimina el margen inferior */
+      overflow-wrap:break-word;
+    }
+
+  .tres-container:hover{
+  transform: scale(1);
     }
   }
 </style>
