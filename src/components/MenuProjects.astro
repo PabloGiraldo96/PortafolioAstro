@@ -7,10 +7,10 @@
   <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
     <div class="aspect-[1097/845] w-[108.5625rem] bg-gradient-to-tr from-[#B4A6C9] to-[#1D1726] opacity-20" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
   </div>
-  <div class="-mt-20 -mb-20 w-[50rem] h-[100%] max-w-7xl px-6 lg:px-8 sm:py-32 sm:mx-auto">
+  <div class="-mt-20 -mb-20 w-[5rem] h-[32rem] max-w-7xl px-6 lg:px-8 sm:py-32 sm:mx-auto">
       <div class="carousel-wrapper">
     <span id="item-1">
-		<a href="https://lapland-zone.vercel.app/" class="button-link">
+		<a href="https://lapland-zone.vercel.app/" target="_blank" class="button-link">
 			Visit
 		</a></span>
     <span id="item-2">
@@ -69,11 +69,12 @@
   height: 30rem;
   object-fit: contain;
   position: relative;
-  left: 5rem;
+  top: -8rem;
+  left: -5rem;
   width: 50rem;
   display: block;
-  margin: 50px auto;
-  border: 2px solid black;
+  margin: 20px auto;
+  border: 12px solid black;
 }
 
 
@@ -140,10 +141,6 @@
   background: url('/src/img/projectsImg/Captura de pantalla 2023-09-12 064312.jpg');
   background-size: cover;
 }
-/*.item-3 {
-  background: url('/src/img/projectsImg/atom.jpg');
-  background-size: cover;
-}*/
 
 *:target ~ .item-1{
   opacity: 0;
@@ -155,5 +152,30 @@
 #item-2:target ~ .item-2, #item-3:target ~ .item-3, #item-4:target ~ .item-4, #item-5:target ~ .item-5, #item-6:target ~ .item-6 {
   z-index: 3;
   opacity: 1;
-} 
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-wrapper {
+	position: absolute;
+	left: 0rem;
+	border: none;
+    width: 100%;
+	height:35rem;
+  }
+
+.item-1, .item-2, .item-3, .item-4, .item-5, .item-6{
+	position: absolute;
+	width: 28rem;
+	height: 25rem;
+	left: 0rem;
+	top: 8rem;
+	}
+}
+
 </style>
