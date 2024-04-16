@@ -4,7 +4,7 @@ import Experience from "../components/Experience.astro"
 import Studies from "../components/Studies.astro";
 import Footer from "../components/Footer.astro";
 import Projects from "../components/Projects.astro";
-import SwiperView from "../components/SwiperView.vue";
+import MenuProjects from "../components/MenuProjects.astro";
 
 
 interface Props {
@@ -22,15 +22,18 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/src/img/badLook.png" />
 		<meta name="generator" content={Astro.generator}/>
+		<link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    	<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></noscript>
+		<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
 		<title>{title}</title>		
 	</head>
 	<body>
 		<Example/>
 	<slot />
 		<Projects/>
-		<SwiperView/>
-		<Experience/>
+		<MenuProjects/>
 		<Studies/>
+		<Experience/>
 	<Footer />
 	</body>
 </html>

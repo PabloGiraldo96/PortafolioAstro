@@ -45,7 +45,7 @@ const matcapTextureThree = await useTexture([
         <TresMeshMatcapMaterial :matcap="matcapTextureThree" />
     </Text3D>
     <Text3D
-        :position="[-135, -150, -60]"
+        :position="[-135, -80, -100]"
 		:size="19"
         ref="textRef"
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"

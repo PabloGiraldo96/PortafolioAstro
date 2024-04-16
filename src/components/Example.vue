@@ -101,9 +101,9 @@ onLoop(({delta, elapsed}) => {
 
 </script>
 <template>
-    <div class="tres-container ease-in duration-300 hover:scale-110">
+    <div class="tres-container">
     <TresCanvas v-bind="gl">
-    <TresPerspectiveCamera :position="[100,108,250]" :look-at="[0,0,0]" class="cameraP"/>
+    <TresPerspectiveCamera :position="[100,108,250]" :look-at="[0,0,0]" class="cameraP ease-in duration-300 hover:scale-110" />
     <OrbitControls />
     <Stars />
     <Suspense>
@@ -174,15 +174,9 @@ onLoop(({delta, elapsed}) => {
 
  @media only screen and (max-width: 390px) {
     .tres-container {
-      /* Modifica los estilos según tus necesidades para una mejor visualización en dispositivos móviles */
-      height: 120vh; /* Ajusta la altura para ocupar toda la pantalla */
+      height: 120vh; 
       flex-direction: column;
-      margin-bottom: -510px; /* Elimina el margen inferior */
-      overflow-wrap:break-word;
-    }
-
-  .tres-container:hover{
-  transform: scale(1);
+      margin-bottom: -510px; 
     }
   }
 </style>

@@ -26,10 +26,11 @@
 
   import { defineComponent } from 'vue'
   import { Swiper, SwiperSlide } from 'swiper/vue'
-  import SwiperCore, { Pagination, Navigation, EffectFade } from 'swiper/core';
+ 
+
   import 'swiper/swiper-bundle.css';
 
-SwiperCore.use([Pagination, Navigation]);
+
 
 export default {
   components: {
@@ -68,7 +69,7 @@ export default {
       img {
         display: block;
         width: 100%;
-        height: 100%;
+        height: 45rem;
         object-fit: cover;
       }
 </style>
