@@ -8,4 +8,4 @@ export default defineConfig({
     enabled: false
   },
   integrations: [vue(), tailwind()]
-});
+})
