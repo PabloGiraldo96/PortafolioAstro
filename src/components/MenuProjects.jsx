@@ -16,7 +16,7 @@ export default () => {
       scrollbar={{ draggable: true }}
       onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log('slide change')}
-       className='h-74' 
+       className='h-74 bg-black' 
 >
       <SwiperSlide>
         <a href="https://cascos-landing.vercel.app/" aria-label="cascos" target="_blank">
@@ -25,7 +25,7 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <a href="https://atom-model.vercel.app/" aria-label="atomModel" target="_blank">
-          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434644206_399144172924608_7255756708533822728_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEGTjhnHSO9u3P1OWQgf8PdJYZdVcUInhclhl1VxQieF9GnrhqG_2FZIajRxTCyCh2xxFiBmwMCIkR_Qe8H6UrR&_nc_ohc=6fsbLtVpkMcAb6EHg83&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHgPsSdMbT6wo94520wtSJJ1macN_kfmOyLcWBK4xOLJA&oe=6647CFCC" alt="cascos" className="h-100 mt-6 mb-55" />
+          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437608248_1398045690826142_6578900220504714493_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFuDkNxflhZ0TnQLPC9sekNE_JKhG7YyS4T8kqEbtjJLh2L2__opRZUzDBnWAIWDchoRCcxlUN56kQiFuxVOzrX&_nc_ohc=RZWOxla8CB0Ab7s9pOD&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFMQz4Tuqf-DfCszOJ0QeNITaHFNOMG2nJiMiCUL_z7fQ&oe=6647EE6E" alt="cascos" className="h-100 mt-6 mb-55" />
         </a>
       </SwiperSlide>
       <SwiperSlide>
@@ -45,7 +45,12 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <a href="https://logitech-educational-landing.vercel.app/" aria-label="cascos" target="_blank">
-          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/435013233_951767576622865_1901447388420134672_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFQtZVvZLFadEI8WYD0Es2N8kOInabNme_yQ4idps2Z71zwWX3csUBdcIdaUOpqfoOEaZFs1riQSj-nzZBvSFOo&_nc_ohc=tUQPF7DbKvUAb7Ti6wo&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGjT8_PIUCBweeuUEO8NqqzYeP3yLsO8jSc_Nx2Ov2fxA&oe=6647E0DB" alt="cascos" className=" mt-6" />
+          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437527839_395907763249176_7168703913263305102_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeE6kiC-690QF_ZxlLAqhjfBCSQNOMv4yIYJJA04y_jIhsoAeAFjCeA2MyQezsIqokDXJSrXa7NazwuMVj1Fnixb&_nc_ohc=vOUgmwnJZAAAb5R8PHh&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFRAgl31xjuGCJ8SePteFjt84ByuuxAjpCOrA32ceD26g&oe=6647F8A6" alt="cascos" className=" mt-6 mb-5" />
+        </a>
+      </SwiperSlide>
+      <SwiperSlide>
+        <a href="https://og-house.vercel.app/" aria-label="cascos" target="_blank">
+          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/436304716_3689605737989262_5930056808360364867_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGg5_20BMov8YWtPzi0bk9E_rm9d5Ik_cX-ub13kiT9xRu4X87c1XjRnlgpylAnvpL-lCyYZKuwDUMwEavkYS3T&_nc_ohc=XxB7NvEqlT4Ab7L5GLZ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGteOhj-gj7V4vqr2_GJz3Sy5S8h-RSjPIvXrhVmyR-uA&oe=6647F083" alt="cascos" className=" mt-6" />
         </a>
       </SwiperSlide>
     </Swiper>
