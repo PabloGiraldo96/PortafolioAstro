@@ -35,7 +35,7 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <a href="https://sine-waves-texture.vercel.app/" aria-label="sineWaves" target="_blank">
-          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434760537_751961530409367_6282908265636797803_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGtlK7fmBbGkUwDqdMFgNflFwdhYUEprV8XB2FhQSmtX8bdJshL_lR8suqOKqL5dmbsWdVIJlPU5AuR_EU7dVSt&_nc_ohc=WCiBtXOImr8Ab5N2E1r&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QED7N-9cEzZ8cfOgcWmI1BDEjd4r2MMIWkoMxax_peLhw&oe=6647E635" alt="cascos" className="mt-6" />
+          <img src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/435381914_965643411517912_2049324314017588983_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeG20_OBYQDBMKbUs8-ZIYin3tbK54pjguDe1srnimOC4FrMEmYwkkH_Yy9J2Yx9MaIu2B4HShNrP21MUMnx21R9&_nc_ohc=Ld3zfYqcjF8Ab5ZEXYJ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QE569qdBp-A7SKnRUH6rhi178ybCiQAP3iTRMAxGIeilA&oe=66489A23" alt="cascos" className="mt-6" />
         </a>
       </SwiperSlide>
       <SwiperSlide>
