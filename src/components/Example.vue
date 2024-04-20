@@ -184,7 +184,7 @@ onLoop(({delta, elapsed}) => {
     .tres-container {
       height: 120vh; 
       flex-direction: column;
-      margin-bottom: -200px; 
+      margin-bottom: -420px; 
     }
   }
 
