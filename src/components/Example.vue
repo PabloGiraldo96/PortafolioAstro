@@ -166,24 +166,25 @@ onLoop(({delta, elapsed}) => {
 .tres-container {
   overflow-x: hidden;
   display: flex;
-  margin-bottom:-50px;
+  margin-bottom:-75px;
   z-index: 1;
   width: 100%;
   height: 67vh;
 }
 
- @media only screen and (max-width: 440px) {
+ @media only screen and (max-width: 445px) {
     .tres-container {
-      height: 120vh; 
+      height: 55rem; 
       flex-direction: column;
-      margin-bottom: -560px; 
+      margin-bottom: -450px; 
     }
   }
 
  @media only screen and (max-width: 414px) {
     .tres-container {
+      height: 58rem;
       flex-direction: column;
-      margin-bottom: -350px; 
+      margin-bottom:-450px; 
     }
   }
 
