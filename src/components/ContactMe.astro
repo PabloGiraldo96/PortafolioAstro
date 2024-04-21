@@ -2,7 +2,7 @@
 
 ---
 
- <div class="py-12 bg-white">
+ <div class="py-12 bg-white contactContainer">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
         <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Contact Me</h2>
@@ -33,3 +33,26 @@
       </div>
     </div>
   </div>
+
+<style>
+
+.contactContainer {
+    animation-timeline: view(block);
+    animation-name: shrink;
+}
+
+@keyframes shrink {
+    from {
+        width: 100%;
+        scale: 0.6;
+        opacity: 0.6;
+    }
+    to {
+        width: calc(40% - 2.5px);
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+
+</style>

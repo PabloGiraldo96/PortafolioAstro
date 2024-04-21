@@ -54,6 +54,5 @@ export default () => {
         </a>
       </SwiperSlide>
     </Swiper>
-) 
-
+  )  
 }

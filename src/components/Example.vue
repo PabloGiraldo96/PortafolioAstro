@@ -188,19 +188,19 @@ onLoop(({delta, elapsed}) => {
     }
   }
 
- @media only screen and (max-width: 419px) {
+ @media only screen and (max-width: 425px) {
     .tres-container {
-      height: 65rem;
+      height: 62rem;
       flex-direction: column;
       margin-bottom:-480px; 
     }
   }
 
- @media only screen and (max-width: 420px) {
+ @media only screen and (max-width: 412px) {
     .tres-container {
-      height: 60rem;
+      height: 130vh; 
       flex-direction: column;
-      margin-bottom: -100px; 
+      margin-bottom: -420px; 
     }
   }
 
