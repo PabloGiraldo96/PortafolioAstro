@@ -2,7 +2,7 @@
 
 ---
 
-<div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32"  id="experience">
+<div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32 experienceContainer"  id="experience">
   <div class="absolute inset-0 -z-10 overflow-hidden">
     </svg>
   </div>
@@ -48,3 +48,32 @@
     </div>
   </div>
 </div>
+
+<style>
+
+ @media only screen and (max-width: 414px) {
+    .experienceContainer {
+      flex-direction: column;
+      margin-top:-20px; 
+    }
+  }
+ @media only screen and (max-width: 434px) {
+    .experienceContainer {
+      flex-direction: column;
+      margin-top:-30px; 
+    }
+  }
+ @media only screen and (max-width: 490px) {
+    .experienceContainer {
+      flex-direction: column;
+      margin-top:-45px; 
+    }
+  }
+ @media only screen and (max-width: 420px) {
+    .experienceContainer {
+      flex-direction: column;
+      margin-top:-50px; 
+    }
+  }
+
+</style>
