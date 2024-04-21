@@ -182,9 +182,9 @@ onLoop(({delta, elapsed}) => {
 
  @media only screen and (max-width: 414px) {
     .tres-container {
-      height: 60rem;
+      height: 63rem;
       flex-direction: column;
-      margin-bottom:-580px; 
+      margin-bottom:-380px; 
     }
   }
 
@@ -196,9 +196,9 @@ onLoop(({delta, elapsed}) => {
     }
   }
 
- @media only screen and (max-width: 412px) {
+ @media only screen and (max-width: 410px) {
     .tres-container {
-      height: 130vh; 
+      height: 68rem; 
       flex-direction: column;
       margin-bottom: -420px; 
     }
