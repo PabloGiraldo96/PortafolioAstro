@@ -17,14 +17,14 @@ import { slide, fade } from "astro:transitions";
   <div class="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu" aria-hidden="true">
     <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
   </div>
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 secondContainer">
     <div class="mx-auto max-w-2xl lg:mx-0">
       <h2 class="text-4xl font-bold tracking-tight text-white text-center sm:text-5xl mb-12 ease-in duration-300 hover:scale-110 aboutMeTitle">About Me</h2>
       <p class="mt-6 text-2xl leading-8 text-gray-300">I'm a frontend developer, exploring the 3D website animations and their visual impact.</p>
       <p class="mt-6 text-2xl leading-8 text-gray-300">Currently studying software engineering to understand how it all works behind, however, every time I get more and more interested about the mathematical concepts.</p>
       <p class="mt-6 text-2xl leading-8 text-gray-300">I've also graduated as a software development technician; it has given me a solid foundation in web development, object-oriented programming, logic and algorithms; but once again, I strongly believe that the deeper understanding of mathematics allows you to play and model problems and their solutions in the technological world we live in today.</p>
       <p class="mt-6 text-2xl leading-8 text-gray-300">I'm in Medellin, Colombia, continuing my studies, focusing on growing professionally and living with this little guy who spends his life with me, my dear cat, Bruce. </p>
-      <img class="mt-8 w-[10rem] h-[12rem] max-w-none rounded-full bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[12rem]" src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434870055_1816365992176059_627668167544754774_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHLRrhR0N-Fqy4tJKHRCYO6YE5AC7KSMTtgTkALspIxO0a3TEFG_4IzalIHTSOB0q_GEU1-G5kYG3lJLVyFQfWx&_nc_ohc=w-Gq3f8puCkAb6p0YRF&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHjhbpFZ6Nmje329ffZALMg5DLcx9F3mp5StQCo4xkCbQ&oe=66454045" alt="">
+      <img class="mt-8 w-[10rem] h-[12rem] rounded-2xl max-w-none bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[12rem] BrucePicture" src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434870055_1816365992176059_627668167544754774_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHLRrhR0N-Fqy4tJKHRCYO6YE5AC7KSMTtgTkALspIxO0a3TEFG_4IzalIHTSOB0q_GEU1-G5kYG3lJLVyFQfWx&_nc_ohc=w-Gq3f8puCkAb6p0YRF&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHjhbpFZ6Nmje329ffZALMg5DLcx9F3mp5StQCo4xkCbQ&oe=66454045" alt="BrucePicture">
     </div>
     <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
       <div class="grid grid-cols-1 gap-x-10 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
@@ -41,6 +41,21 @@ import { slide, fade } from "astro:transitions";
 </Layout>
 
 <style>
+
+.BrucePicture{
+    animation-timeline: view(50rem);
+    animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .mainContainer{
   margin-top: -560px;
 }

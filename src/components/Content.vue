@@ -3,17 +3,16 @@ import { useTexture } from '@tresjs/core'
 import { Text3D } from '@tresjs/cientos'
 
 const matcapTexture = await useTexture([
-  'https://th.bing.com/th/id/OIP.7rd_bvr-joYRQkMm4yqmEAHaGe?w=549&h=480&rs=1&pid=ImgDetMain',
+  'https://th.bing.com/th/id/R.682f15661deac23380d5fa523c36c905?rik=ed8u4mEr5ZMFJA&riu=http%3a%2f%2fjm-derochette.be%2fimages%2fConoscopie_biaxial%2fAccessory_plates%2fI_E2_45G_1L.jpg&ehk=1B%2bVyHtPx6PTmYkREca0ZFFgV2yHLvpB9hLIathCgl8%3d&risl=&pid=ImgRaw&r=0',
 ]);
 
 const matcapTextureTwo = await useTexture([
-  'https://i1.wp.com/motionsquared.net/wp-content/uploads/2019/01/cinema-4d-marble-materials-pack_085.jpg?ssl=1',
+    'https://th.bing.com/th/id/R.ae2a8ad06203281ecae14a8ba39f4acf?rik=Iq82Mj5zbTV9yw&riu=http%3a%2f%2fwww.solarsystemscope.com%2ftextures%2fpreviews%2fpreview_saturn_ring.jpg&ehk=XOaCh4bbqVj5tfcvSk1lK9%2feiiwAzSKCnQallE%2bZPt4%3d&risl=&pid=ImgRaw&r=0',
 ]);
 
 const matcapTextureThree = await useTexture([
-  'https://th.bing.com/th/id/R.ae2a8ad06203281ecae14a8ba39f4acf?rik=Iq82Mj5zbTV9yw&riu=http%3a%2f%2fwww.solarsystemscope.com%2ftextures%2fpreviews%2fpreview_saturn_ring.jpg&ehk=XOaCh4bbqVj5tfcvSk1lK9%2feiiwAzSKCnQallE%2bZPt4%3d&risl=&pid=ImgRaw&r=0',
+  'https://th.bing.com/th/id/R.98425c6121f31b77f1c79b6955411b9d?rik=W7riODblz4GOwQ&pid=ImgRaw&r=0',
 ]);
-
 
 </script>
 <template>
@@ -51,6 +50,6 @@ const matcapTextureThree = await useTexture([
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
         >
         UI Design
-        <TresMeshMatcapMaterial :matcap="matcapTextureThree" />
+        <TresMeshMatcapMaterial :matcap="matcapTextureTwo" />
     </Text3D>
 </template>
