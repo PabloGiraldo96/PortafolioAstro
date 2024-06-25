@@ -23,7 +23,7 @@ const matcapTextureThree = await useTexture([
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
         >
         Juan Pablo Giraldo
-        <TresMeshMatcapMaterial :matcap="matcapTexture" />
+        <TresMeshNormalMaterial/>
     </Text3D>
     <Text3D
         :position="[105, 10, 35]"
@@ -32,7 +32,7 @@ const matcapTextureThree = await useTexture([
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
         >
         Frontend
-        <TresMeshMatcapMaterial :matcap="matcapTextureTwo" />
+        <TresMeshNormalMaterial/>
     </Text3D>
     <Text3D
         :position="[-25, 45, -60]"
@@ -50,6 +50,6 @@ const matcapTextureThree = await useTexture([
         font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
         >
         UI Design
-        <TresMeshMatcapMaterial :matcap="matcapTextureTwo" />
+        <TresMeshNormalMaterial/>
     </Text3D>
 </template>
