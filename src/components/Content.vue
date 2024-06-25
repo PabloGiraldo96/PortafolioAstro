@@ -3,7 +3,7 @@ import { useTexture } from '@tresjs/core'
 import { Text3D } from '@tresjs/cientos'
 
 const matcapTexture = await useTexture([
-  'https://3d.wlu.edu/v20/build/potree/resources/textures/matcap/metal_shiny.jpg',
+  'https://blenderartists.org/uploads/default/original/4X/0/e/4/0e431b4d369527b272509cf563fb6c164cd736e3.jpeg',
 ]);
 
 const matcapTextureTwo = await useTexture([
