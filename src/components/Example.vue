@@ -49,7 +49,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRef.value.rotation.z = 0.004;
     geometryRef.value.scale.set(
       Math.sin(elapsed) * 0.18 - 0.1,
-      Math.sin(elapsed) * 0.2 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.14 - 0.1
     );
 
@@ -59,7 +59,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefTwo.value.rotation.x += (radius * speed * 1) / 2;
     geometryRefTwo.value.rotation.z = elapsed;
     geometryRefTwo.value.scale.set(
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1,
       Math.sin(delta) * 0.15 - 0.1
     );
@@ -72,7 +72,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefThree.value.position.set(100, 55, 95);
     geometryRefThree.value.scale.set(
       Math.sin(elapsed) * 0.15 - 0.1,
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
 
@@ -87,7 +87,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefFour.value.rotation.x += -radius * speed * 2.5;
     geometryRefFour.value.rotation.z = 0.004;
     geometryRefFour.value.scale.set(
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
@@ -104,7 +104,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefFive.value.rotation.z = 0.004;
     geometryRefFive.value.scale.set(
       Math.sin(elapsed) * 0.15 - 0.1,
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
 
@@ -120,7 +120,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefSix.value.rotation.z = 0.004;
     geometryRefSix.value.scale.set(
       Math.sin(elapsed) * 0.15 - 0.1,
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
 
@@ -135,7 +135,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefSeven.value.rotation.x += radius * speed * 2.4;
     geometryRefSeven.value.rotation.z = 0.004;
     geometryRefSeven.value.scale.set(
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.15 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
@@ -151,7 +151,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefEight.value.rotation.x += radius * speed * 2.4;
     geometryRefEight.value.rotation.z = 0.004;
     geometryRefEight.value.scale.set(
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
@@ -167,7 +167,7 @@ onLoop(({ delta, elapsed }) => {
     geometryRefNine.value.rotation.x += radius * speed * 2.4;
     geometryRefNine.value.rotation.z = 0.004;
     geometryRefNine.value.scale.set(
-      Math.sin(elapsed) * 0.15 - 0.1,
+      Math.tan(elapsed) * 0.015 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1,
       Math.sin(elapsed) * 0.15 - 0.1
     );
