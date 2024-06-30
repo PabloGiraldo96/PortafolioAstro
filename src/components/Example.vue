@@ -178,7 +178,7 @@ onLoop(({ delta, elapsed }) => {
   <div class="tres-container">
     <TresCanvas v-bind="gl">
       <TresPerspectiveCamera
-        :position="[150, 108, 250]"
+        :position="[-150, -10, 380]"
         :look-at="[0, 0, 0]"
         class="cameraP ease-in duration-300 hover:scale-110"
       />
