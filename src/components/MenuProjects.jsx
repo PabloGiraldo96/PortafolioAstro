@@ -13,7 +13,7 @@ export default () => {
       loop={true}
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
-      onSlideChange={() => console.log("slide change")}
+      onSlideChange={() => console.log("Slide Working")}
       className="h-74 bg-black"
     >
       <SwiperSlide>
@@ -64,6 +64,19 @@ export default () => {
           <img
             src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434777790_935123398292275_8041764204225360167_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=8RxXm3nHuHUQ7kNvgEZYqN0&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGyqB_NGsi6VDyVFWbjdPmtigak7AZvQ-PBB2uhg5_AKQ&oe=66A242ED"
             alt="sineWaves"
+            className="mx-auto mt-8"
+          />
+        </a>
+      </SwiperSlide>
+      <SwiperSlide>
+        <a
+          href="https://light-spark.vercel.app/"
+          aria-label="SparkLight"
+          target="_blank"
+        >
+          <img
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449937181_1527427404558774_353074505124488073_n.png?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGDC06fQ-dkRErSsVd7--lSvQ7d8qfEYjW9Dt3yp8RiNZIJv8aK5dZrBA1FKxrdE8ASvDzdEwLR4kj4kfvoziWv&_nc_ohc=diWdX5eUlFoQ7kNvgFRN8sO&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGb0Y8ucRmX4t9Z_IDIiMjnCXUTnf1zfTb3bcJrHvXFSA&oe=66B559D1"
+            alt="sparkLight"
             className="mx-auto mt-8"
           />
         </a>
