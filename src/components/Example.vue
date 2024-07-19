@@ -6,7 +6,7 @@ import { shallowRef, watchEffect } from "vue";
 import Text from "./Content.vue";
 
 const gl = {
-  clearColor: "#09070D",
+  clearColor: "#0C050F",
   shadows: true,
   alpha: false,
   shadowMapType: BasicShadowMap,
@@ -265,14 +265,14 @@ onLoop(({ delta, elapsed }) => {
   margin-bottom: -75px;
   z-index: 1;
   width: 100%;
-  height: 67vh;
+  height: 60vh;
 }
 
 @media only screen and (max-width: 1440px) {
   .tres-container {
-    height: 62rem;
+    height: 65rem;
     flex-direction: column;
-    margin-bottom: -450px;
+    margin-bottom: -650px;
   }
 }
 
