@@ -23,7 +23,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/362432012_2923533341110987_7059030799891607228_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_ohc=MUbuas6tJIcQ7kNvgE73RDY&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QF9v4NfMx6dA7m3vD1m1EmqQPP5qdGicWdjoB8f7DlfSg&oe=66A237CA"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/362432012_2923533341110987_7059030799891607228_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEY7E5hOmhBvBGgOejnfjF3NHC0Fg-KPI80cLQWD4o8j2sv3jcBp11O6TcbYg_iynfx515YTWIUBV7IP-Q0KZO4&_nc_ohc=bGjyURom1o8Q7kNvgGWJ3cp&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHklC4b_BxkTwQq-rBieb5lkdad4em_iecnDIFI74AwpQ&oe=66CA6D8A"
             alt="cascos"
             className="mx-auto mt-8"
           />
@@ -36,7 +36,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437608248_1398045690826142_6578900220504714493_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=9f807c&_nc_ohc=Zhpgxzm1qIsQ7kNvgGTKvce&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFlMGbrtsURNzOldUS7K9HctNebimRP68MW-SLwtTctDA&oe=66A23D2E"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437608248_1398045690826142_6578900220504714493_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFuDkNxflhZ0TnQLPC9sekNE_JKhG7YyS4T8kqEbtjJLh2L2__opRZUzDBnWAIWDchoRCcxlUN56kQiFuxVOzrX&_nc_ohc=PYBccBjW9n0Q7kNvgEzHAUA&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFzGFIxadlMVfnWf8-TujQSQ7YoyDOVmpdLG0b603pAGw&oe=66CA72EE"
             alt="atomModel"
             className="mx-auto mt-6"
           />
@@ -49,7 +49,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434997285_1759516644539620_1668137813982040004_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_ohc=jYXiOZLnd98Q7kNvgHM0ItQ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QETLrFDsi0o9SnKtCmiI9iG2nZ7kybOLs3aifTzUDdJ3w&oe=66A25776"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434997285_1759516644539620_1668137813982040004_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHdMafy0Ck-Kh19w-0zHNas2cMU9t72C-nZwxT23vYL6ZsABA34oXsHKJWoJcxN2GgyxRfMa0PC4lG0B4mUIUPt&_nc_ohc=3xMQiHUN3d4Q7kNvgEia9nt&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHtJxWX-5v80u-aTp9U8Ko2sCbYF8rEk_cvUVJvaRTpZA&oe=66CA54F6"
             alt="skyBox"
             className=" mx-auto mt-8"
           />
@@ -62,7 +62,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434777790_935123398292275_8041764204225360167_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=8RxXm3nHuHUQ7kNvgEZYqN0&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGyqB_NGsi6VDyVFWbjdPmtigak7AZvQ-PBB2uhg5_AKQ&oe=66A242ED"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434760537_751961530409367_6282908265636797803_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGtlK7fmBbGkUwDqdMFgNflFwdhYUEprV8XB2FhQSmtX8bdJshL_lR8suqOKqL5dmbsWdVIJlPU5AuR_EU7dVSt&_nc_ohc=LZdWkTrMbJAQ7kNvgHzNhNS&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QEP3Zu4nhttfNAjsa6tMnUYP37BVQJJlj5YFBtQALcNTw&oe=66CA6AB5"
             alt="sineWaves"
             className="mx-auto mt-8"
           />
@@ -75,7 +75,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449937181_1527427404558774_353074505124488073_n.png?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGDC06fQ-dkRErSsVd7--lSvQ7d8qfEYjW9Dt3yp8RiNZIJv8aK5dZrBA1FKxrdE8ASvDzdEwLR4kj4kfvoziWv&_nc_ohc=diWdX5eUlFoQ7kNvgFRN8sO&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGb0Y8ucRmX4t9Z_IDIiMjnCXUTnf1zfTb3bcJrHvXFSA&oe=66B559D1"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449937181_1527427404558774_353074505124488073_n.png?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGDC06fQ-dkRErSsVd7--lSvQ7d8qfEYjW9Dt3yp8RiNZIJv8aK5dZrBA1FKxrdE8ASvDzdEwLR4kj4kfvoziWv&_nc_ohc=u414KQ0bIE0Q7kNvgFSwSC4&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHJo-6YTBtHt0hetZvBQtM3vqakHYMlyVlO-o410R_3dw&oe=66CA71D1"
             alt="sparkLight"
             className="mx-auto mt-8"
           />
@@ -88,7 +88,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/356788891_800656961457839_8550209978705014080_n.png?_nc_cat=105&ccb=1-7&_nc_sid=9f807c&_nc_ohc=L74J6NAvS84Q7kNvgEzlNLJ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGUkMRRyn9MCQlHjFBqxT-02Uken1YC7IFot5rhQBR1Ow&oe=66A238EA"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437316591_7473990932692285_5688287696450042769_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeH387Ooo0uktVRaWgpkQ3ojA-aceQw0rYMD5px5DDStg8RUDUSnW7dsmSY1ybhHarhqdIVsgkXzSaGn3POfhGkH&_nc_ohc=U5s4vB4-29EQ7kNvgFffaCZ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QECHX1Emoq-BElIRXXl6Ralwr4S-DyDPVCknotTjTFNvw&oe=66CA62E5"
             alt="lapland"
             className="mx-auto mt-8"
           />
@@ -101,7 +101,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437527839_395907763249176_7168703913263305102_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_ohc=PrguhFQkfgcQ7kNvgGZz3fT&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGhRnepnwSe7nDsx7w2LxNcbcWekqW5EQKtQ-vcjlI49w&oe=66A24766"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437527839_395907763249176_7168703913263305102_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeE6kiC-690QF_ZxlLAqhjfBCSQNOMv4yIYJJA04y_jIhsoAeAFjCeA2MyQezsIqokDXJSrXa7NazwuMVj1Fnixb&_nc_ohc=ziPLu6shGTAQ7kNvgHkJHbQ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFyvt2m8EJZUYzs-z9UUtVGUfk_-ykjhqBLXkFwtsVwiw&oe=66CA7D26"
             alt="logitech"
             className="mx-auto"
           />
@@ -109,13 +109,26 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide>
         <a
-          href="https://og-house.vercel.app/"
+          href="https://sushi-landing-six.vercel.app/"
           aria-label="cascos"
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/436304716_3689605737989262_5930056808360364867_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9f807c&_nc_ohc=GiTGj9savtsQ7kNvgGSV3EZ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGiA2P3R046tYYJAHrk81CA0pNpu9uOMetqSF017s9Kew&oe=66A23F43"
-            alt="ogHouse"
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/450784490_813581444220556_5405473915107737496_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHEP10RCelg57wAn52B7CXcxmyNnhCPuCLGbI2eEI-4InWayHn4W5Z6Q70inM1YN4gN2_pMySWkyCit7aGbmJJQ&_nc_ohc=jJaiAjFqalIQ7kNvgHyBp-C&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHjF4qFQaC72l6ThQOwL7pNDXrxuN_K2cB_-OsaZ9IBrA&oe=66CA6C42"
+            alt="SushiWorld"
+            className="mx-auto mt-8"
+          />
+        </a>
+      </SwiperSlide>
+      <SwiperSlide>
+        <a
+          href="https://scroll-animation-zeta.vercel.app/"
+          aria-label="cascos"
+          target="_blank"
+        >
+          <img
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449746215_691643916461095_5598000245293300920_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHV9vFTNIojh3HBj_Ms_ZD1Gw1IxVv02MEbDUjFW_TYwa_ILIzixT46tFVdv4U3I1d2iGptnbgqEVTAlTqahZyd&_nc_ohc=6S_dnjGAiv0Q7kNvgFq8Nga&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QG1MFZLxY3AX7hu6Gth0wHYgsscLQOTVqI0bPHTg7eTgg&oe=66CA86BC"
+            alt="ScrollBlender"
             className="mx-auto mt-8"
           />
         </a>
