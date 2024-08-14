@@ -14,22 +14,48 @@ export default () => {
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
       onSlideChange={() => console.log("Slide Working")}
-      className="h-74 bg-black"
+      className="h-74 bg-black z-0 hover:z-50"
     >
-      <SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
+        <a
+          href="https://study-room-chi.vercel.app/"
+          aria-label="myRoom"
+          target="_blank"
+        >
+          <div className="relative">
+            <img
+              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/453355921_3102014733268877_522087315941961482_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGBtznNQgzMIWVSbQBKHjTRgXWt7QqSkyyBda3tCpKTLLcXAkxxisnz5lHMjPlNj1vrtIlNdLb1eZomYScHG4y5&_nc_ohc=bE-5Nghe-08Q7kNvgGAU20W&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QEOJl3qUFGtgOJ0VKLT9qXPwOEVNp5uFrg5DzZX24rQGA&oe=66E3755F"
+              alt="myRoom"
+              className="mx-auto mt-6"
+            />
+            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+              <h2 className="secondTitle italic font-sans  text-8xl  z-40">
+                3D Web Modeling
+              </h2>{" "}
+            </div>
+          </div>
+        </a>
+      </SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://cascos-landing.vercel.app/"
           aria-label="cascos"
           target="_blank"
         >
-          <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/362432012_2923533341110987_7059030799891607228_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEY7E5hOmhBvBGgOejnfjF3NHC0Fg-KPI80cLQWD4o8j2sv3jcBp11O6TcbYg_iynfx515YTWIUBV7IP-Q0KZO4&_nc_ohc=bGjyURom1o8Q7kNvgGWJ3cp&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHklC4b_BxkTwQq-rBieb5lkdad4em_iecnDIFI74AwpQ&oe=66CA6D8A"
-            alt="cascos"
-            className="mx-auto mt-8"
-          />
+          <div className="relative">
+            <img
+              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/362432012_2923533341110987_7059030799891607228_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEY7E5hOmhBvBGgOejnfjF3NHC0Fg-KPI80cLQWD4o8j2sv3jcBp11O6TcbYg_iynfx515YTWIUBV7IP-Q0KZO4&_nc_ohc=bGjyURom1o8Q7kNvgGWJ3cp&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QHklC4b_BxkTwQq-rBieb5lkdad4em_iecnDIFI74AwpQ&oe=66CA6D8A"
+              alt="cascos"
+              className="mx-auto mt-8"
+            />
+            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+              <h2 className="text-8xl italic font-sans z-40">Animations</h2>{" "}
+            </div>
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
+
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://atom-model.vercel.app/"
           aria-label="atomModel"
@@ -40,9 +66,50 @@ export default () => {
             alt="atomModel"
             className="mx-auto mt-6"
           />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              3D Web Modeling
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
+        <a
+          href="https://lapland-zone.vercel.app/"
+          aria-label="Lapland"
+          target="_blank"
+        >
+          <img
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437316591_7473990932692285_5688287696450042769_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeH387Ooo0uktVRaWgpkQ3ojA-aceQw0rYMD5px5DDStg8RUDUSnW7dsmSY1ybhHarhqdIVsgkXzSaGn3POfhGkH&_nc_ohc=U5s4vB4-29EQ7kNvgFffaCZ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QECHX1Emoq-BElIRXXl6Ralwr4S-DyDPVCknotTjTFNvw&oe=66CA62E5"
+            alt="lapland"
+            className="mx-auto mt-8"
+          />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="secondTitle italic font-sans  text-8xl  z-40">
+              Web Development{" "}
+            </h2>{" "}
+          </div>
+        </a>
+      </SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
+        <a
+          href="https://scroll-animation-zeta.vercel.app/"
+          aria-label="scrollAnimation"
+          target="_blank"
+        >
+          <img
+            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449746215_691643916461095_5598000245293300920_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHV9vFTNIojh3HBj_Ms_ZD1Gw1IxVv02MEbDUjFW_TYwa_ILIzixT46tFVdv4U3I1d2iGptnbgqEVTAlTqahZyd&_nc_ohc=6S_dnjGAiv0Q7kNvgFq8Nga&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QG1MFZLxY3AX7hu6Gth0wHYgsscLQOTVqI0bPHTg7eTgg&oe=66CA86BC"
+            alt="ScrollBlender"
+            className="mx-auto mt-8"
+          />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              Blender x Web design
+            </h2>{" "}
+          </div>
+        </a>
+      </SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://skybox-modeling.vercel.app/"
           aria-label="skybox"
@@ -53,9 +120,14 @@ export default () => {
             alt="skyBox"
             className=" mx-auto mt-8"
           />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              3D Web Modeling
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://sine-waves-texture.vercel.app/"
           aria-label="sineWaves"
@@ -66,9 +138,14 @@ export default () => {
             alt="sineWaves"
             className="mx-auto mt-8"
           />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              3D Web Modeling
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://light-spark.vercel.app/"
           aria-label="SparkLight"
@@ -79,25 +156,18 @@ export default () => {
             alt="sparkLight"
             className="mx-auto mt-8"
           />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              3D Web Modeling
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
-        <a
-          href="https://lapland-zone.vercel.app/"
-          aria-label="cascos"
-          target="_blank"
-        >
-          <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437316591_7473990932692285_5688287696450042769_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeH387Ooo0uktVRaWgpkQ3ojA-aceQw0rYMD5px5DDStg8RUDUSnW7dsmSY1ybhHarhqdIVsgkXzSaGn3POfhGkH&_nc_ohc=U5s4vB4-29EQ7kNvgFffaCZ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QECHX1Emoq-BElIRXXl6Ralwr4S-DyDPVCknotTjTFNvw&oe=66CA62E5"
-            alt="lapland"
-            className="mx-auto mt-8"
-          />
-        </a>
-      </SwiperSlide>
-      <SwiperSlide>
+
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://logitech-educational-landing.vercel.app/"
-          aria-label="cascos"
+          aria-label="Logitech"
           target="_blank"
         >
           <img
@@ -105,12 +175,17 @@ export default () => {
             alt="logitech"
             className="mx-auto"
           />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="Logitech italic font-sans  text-8xl  z-40">
+              Animations
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://sushi-landing-six.vercel.app/"
-          aria-label="cascos"
+          aria-label="SushiAnimation"
           target="_blank"
         >
           <img
@@ -118,19 +193,11 @@ export default () => {
             alt="SushiWorld"
             className="mx-auto mt-8"
           />
-        </a>
-      </SwiperSlide>
-      <SwiperSlide>
-        <a
-          href="https://scroll-animation-zeta.vercel.app/"
-          aria-label="cascos"
-          target="_blank"
-        >
-          <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449746215_691643916461095_5598000245293300920_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHV9vFTNIojh3HBj_Ms_ZD1Gw1IxVv02MEbDUjFW_TYwa_ILIzixT46tFVdv4U3I1d2iGptnbgqEVTAlTqahZyd&_nc_ohc=6S_dnjGAiv0Q7kNvgFq8Nga&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QG1MFZLxY3AX7hu6Gth0wHYgsscLQOTVqI0bPHTg7eTgg&oe=66CA86BC"
-            alt="ScrollBlender"
-            className="mx-auto mt-8"
-          />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="Sushi italic font-sans  text-8xl  z-40">
+              Blender x Web design
+            </h2>{" "}
+          </div>
         </a>
       </SwiperSlide>
     </Swiper>

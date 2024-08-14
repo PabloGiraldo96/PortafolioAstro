@@ -1,3 +1,82 @@
 .cardsSwiper {
-height: 110vh;
+  height: 110vh;
+  opacity: 0.7;
+  transition: opacity 15s ease-in 2s;
+  /*z-index: 1; Ajuste general para el Swiper*/
+  position: relative;
+}
+
+.cardsSwiper:hover {
+  opacity: 0.4;
+  transition: ease-in 2s;
+}
+
+.cardsSwiper div {
+  position: relative;
+}
+
+.cardsSwiper div h2 {
+  color: rgb(235, 75, 12);
+  letter-spacing: 8px;
+  position: relative;
+  z-index: 20;
+  font-size: 200px;
+  text-align: center;
+  top: 80%;
+  left: 30%;
+  transform: translate(-23%, -180%);
+}
+.cardsSwiper .secondTitle {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 120px;
+  text-align: center;
+  top: 80%;
+  left: 30%;
+  transform: translate(-35%, 20%);
+}
+.cardsSwiper .ThirdTitle {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 120px;
+  text-align: center;
+}
+.cardsSwiper .Sushi {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 120px;
+  text-align: center;
+  top: 90%;
+  left: 30%;
+  transform: translate(-60%, 110%);
+}
+/*.cardsSwiper .ThirdTitle {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 120px;
+  text-align: center;
+}*/
+
+.cardsSwiper div:hover {
+  opacity: 1;
+}
+
+.cardsSwiper .absolute {
+  transition: opacity 1s ease-in-out 1s;
+  top: -550px;
+}
+
+.cardsSwiper:hover .absolute {
+  /*z-index: 20;*/
+  position: relative;
+  opacity: 1;
+  transition: ease-in 1s;
 }
