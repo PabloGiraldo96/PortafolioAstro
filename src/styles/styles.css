@@ -1,5 +1,5 @@
 .cardsSwiper {
-  height: 110vh;
+  height: 50vh;
   opacity: 0.7;
   transition: opacity 15s ease-in 2s;
   /*z-index: 1; Ajuste general para el Swiper*/
@@ -13,6 +13,7 @@
 
 .cardsSwiper div {
   position: relative;
+  margin-bottom: -170px;
 }
 
 .cardsSwiper div h2 {
@@ -20,7 +21,7 @@
   letter-spacing: 8px;
   position: relative;
   z-index: 20;
-  font-size: 200px;
+  font-size: 75px;
   text-align: center;
   top: 80%;
   left: 30%;
@@ -31,30 +32,67 @@
   letter-spacing: 6px;
   position: relative;
   z-index: 20;
-  font-size: 120px;
+  font-size: 75px;
   text-align: center;
   top: 80%;
   left: 30%;
   transform: translate(-35%, 20%);
+}
+.cardsSwiper .Logitech {
+  color: rgb(235, 75, 12);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 75px;
+  text-align: center;
+  top: 80%;
+  left: 30%;
+  transform: translate(-5%, -95%);
 }
 .cardsSwiper .ThirdTitle {
   color: rgb(255, 255, 255);
   letter-spacing: 6px;
   position: relative;
   z-index: 20;
-  font-size: 120px;
+  font-size: 75px;
   text-align: center;
+}
+.cardsSwiper .SkyBox {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 75px;
+  text-align: center;
+  transform: translate(-15%, -130%);
+}
+.cardsSwiper .Lapland {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 75px;
+  text-align: center;
+}
+.cardsSwiper .Waves {
+  color: rgb(255, 255, 255);
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 20;
+  font-size: 75px;
+  text-align: center;
+  transform: translate(-35%, 20%);
 }
 .cardsSwiper .Sushi {
   color: rgb(255, 255, 255);
   letter-spacing: 6px;
   position: relative;
   z-index: 20;
-  font-size: 120px;
+  font-size: 80px;
   text-align: center;
-  top: 90%;
+  top: 90;
   left: 30%;
-  transform: translate(-60%, 110%);
+  transform: translate(-30%, 200%);
 }
 /*.cardsSwiper .ThirdTitle {
   color: rgb(255, 255, 255);
@@ -79,4 +117,66 @@
   position: relative;
   opacity: 1;
   transition: ease-in 1s;
+}
+
+@media only screen and (max-width: 545px) {
+  .cardsSwiper {
+    height: 110vh;
+    flex-direction: column;
+    margin-bottom: -120px;
+    font-size: 30px;
+  }
+}
+@media only screen and (max-width: 445px) {
+  .cardsSwiper {
+    height: 110vh;
+    flex-direction: column;
+    margin-bottom: -120px;
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .cardsSwiper {
+    height: 110vh;
+    flex-direction: column;
+    font-size: 30px;
+    margin-bottom: -120px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .cardsSwiper {
+    height: 90vh;
+    flex-direction: column;
+    font-size: 30px;
+    margin-bottom: -120px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .cardsSwiper {
+    height: 90vh;
+    flex-direction: column;
+    font-size: 30px;
+    margin-bottom: -120px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .cardsSwiper {
+    height: 250vh;
+    flex-direction: column;
+    font-size: 30px;
+    margin-bottom: -120px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .cardsSwiper {
+    height: 90vh;
+    flex-direction: column;
+    font-size: 30px;
+    margin-bottom: -120px;
+  }
 }

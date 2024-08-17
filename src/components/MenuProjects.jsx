@@ -1,6 +1,13 @@
+//import logo from "./assets/images/atropos-logo-en.svg";
+//import "../node_modules/atropos/atropos.css";
 import React from "react";
 import { Pagination } from "swiper";
 import "../styles/styles.css";
+import Atropos from "atropos/react";
+import bg from "../assets/images/atropos-bg.svg";
+import forestBack from "../assets/images/atropos-forest-back.svg";
+import forestFront from "../assets/images/atropos-forest-front.svg";
+import forestMid from "../assets/images/atropos-forest-mid.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -38,6 +45,26 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide className="cardsSwiper">
         <a
+          href="https://car-world-nine.vercel.app/"
+          aria-label="carScene"
+          target="_blank"
+        >
+          <div className="relative">
+            <img
+              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/453707361_1257609718979204_5656136358129985642_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=9f807c&_nc_ohc=IAWjCU_nq3wQ7kNvgGNCzX3&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QGm5Dwc2oRSv27Y8f5zM1NaWAVGsHpkxuBN07yyHv82Bg&oe=66E73DB3"
+              alt="carScene"
+              className="mx-auto mt-6"
+            />
+            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+              <h2 className="secondTitle italic font-sans  text-8xl  z-40">
+                3D Web Modeling
+              </h2>{" "}
+            </div>
+          </div>
+        </a>
+      </SwiperSlide>
+      <SwiperSlide className="cardsSwiper">
+        <a
           href="https://cascos-landing.vercel.app/"
           aria-label="cascos"
           target="_blank"
@@ -49,7 +76,9 @@ export default () => {
               className="mx-auto mt-8"
             />
             <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-              <h2 className="text-8xl italic font-sans z-40">Animations</h2>{" "}
+              <h2 className="Helmets text-8xl italic font-sans z-40">
+                Animations
+              </h2>{" "}
             </div>
           </div>
         </a>
@@ -85,7 +114,7 @@ export default () => {
             className="mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-            <h2 className="secondTitle italic font-sans  text-8xl  z-40">
+            <h2 className="Lapland italic font-sans  text-8xl  z-40">
               Web Development{" "}
             </h2>{" "}
           </div>
@@ -121,7 +150,7 @@ export default () => {
             className=" mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+            <h2 className="SkyBox italic font-sans  text-8xl  z-40">
               3D Web Modeling
             </h2>{" "}
           </div>
@@ -139,7 +168,7 @@ export default () => {
             className="mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+            <h2 className="Waves italic font-sans  text-8xl  z-40">
               3D Web Modeling
             </h2>{" "}
           </div>
@@ -173,7 +202,7 @@ export default () => {
           <img
             src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437527839_395907763249176_7168703913263305102_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeE6kiC-690QF_ZxlLAqhjfBCSQNOMv4yIYJJA04y_jIhsoAeAFjCeA2MyQezsIqokDXJSrXa7NazwuMVj1Fnixb&_nc_ohc=ziPLu6shGTAQ7kNvgHkJHbQ&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QFyvt2m8EJZUYzs-z9UUtVGUfk_-ykjhqBLXkFwtsVwiw&oe=66CA7D26"
             alt="logitech"
-            className="mx-auto"
+            className="mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
             <h2 className="Logitech italic font-sans  text-8xl  z-40">
