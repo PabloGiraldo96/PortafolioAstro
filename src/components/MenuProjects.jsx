@@ -1,13 +1,6 @@
 //import logo from "./assets/images/atropos-logo-en.svg";
 //import "../node_modules/atropos/atropos.css";
-import React from "react";
-import { Pagination } from "swiper";
 import "../styles/styles.css";
-import Atropos from "atropos/react";
-import bg from "../assets/images/atropos-bg.svg";
-import forestBack from "../assets/images/atropos-forest-back.svg";
-import forestFront from "../assets/images/atropos-forest-front.svg";
-import forestMid from "../assets/images/atropos-forest-mid.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -24,6 +17,19 @@ export default () => {
       className="h-74 bg-black z-0 hover:z-50"
     >
       <SwiperSlide className="cardsSwiper">
+        <a href="https://oghouseweb.com/" aria-label="OGHouse" target="_blank">
+          <div className="relative">
+            <img
+              src="https://ucarecdn.com/6b5035a5-875f-4774-83e8-173af7d0d967/Captura%20de%20pantalla%202025-03-11%20142235.png"
+              alt="OGHouse"
+              className="mx-auto mt-6"
+            />
+            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100"></div>
+          </div>
+        </a>
+      </SwiperSlide>
+
+      <SwiperSlide className="cardsSwiper">
         <a
           href="https://study-room-chi.vercel.app/"
           aria-label="myRoom"
@@ -31,7 +37,7 @@ export default () => {
         >
           <div className="relative">
             <img
-              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/453355921_3102014733268877_522087315941961482_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_ohc=mkZ--YLAnNEQ7kNvgHo2JWq&_nc_oc=Adibcecuyzz_Bf7PSxQAR1_yY4TSiXgyfFCsOLJ5o5NoYbtTj7-JNpf3FgLUM2j1ViqiucutgN81GvfdwQkd2I1M&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gGrOFpt43ghYvlHpex9qp64_gXn8K7j_9T3ozV-DtqkRQ&oe=67B2E15F"
+              src="https://ucarecdn.com/00f801a9-176e-4ff8-a5f9-fb0fd6dac4bb/myRoomBlender2.jpg"
               alt="myRoom"
               className="mx-auto mt-6"
             />
@@ -45,41 +51,19 @@ export default () => {
       </SwiperSlide>
       <SwiperSlide className="cardsSwiper">
         <a
-          href="https://car-world-nine.vercel.app/"
-          aria-label="carScene"
+          href="https://sushi-landing-six.vercel.app/"
+          aria-label="SushiAnimation"
           target="_blank"
         >
-          <div className="relative">
-            <img
-              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/453707361_1257609718979204_5656136358129985642_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=9f807c&_nc_ohc=TL_CI2KAM4MQ7kNvgHaLhU8&_nc_oc=AdjgCn4r9v0KDKUURDd21WZ0qwLrpnJKSgBlyfwcSb9bEG10tBrnEor7Pnf3AB3XAhQPUEEN_mx18jrQ2Mk24oWD&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gHNjreCR4zkAS-TLwJVEsthIYSavGRQy9IfHbq4V6_KRw&oe=67B2ED73"
-              alt="carScene"
-              className="mx-auto mt-6"
-            />
-            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-              <h2 className="secondTitle italic font-sans  text-8xl  z-40">
-                3D Web Modeling
-              </h2>{" "}
-            </div>
-          </div>
-        </a>
-      </SwiperSlide>
-      <SwiperSlide className="cardsSwiper">
-        <a
-          href="https://cascos-landing.vercel.app/"
-          aria-label="cascos"
-          target="_blank"
-        >
-          <div className="relative">
-            <img
-              src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/362432012_2923533341110987_7059030799891607228_n.png?_nc_cat=103&ccb=1-7&_nc_sid=9f807c&_nc_ohc=yAYw25Cqn7gQ7kNvgFuoLIQ&_nc_oc=AdhzqZ4j_4otIw1EjBYyXOxEJ93q7jEPAQ8CWjFnMNSHImlOnNJBeD0GRtECD0LbIfeLBdXCB8vb5ItThBgn4wlV&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gEh4gi6ps4-W-Y-C49bMD7DrzPlI05tV0TcGn1Ad52z9w&oe=67B2E60A"
-              alt="cascos"
-              className="mx-auto mt-8"
-            />
-            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-              <h2 className="Helmets text-8xl italic font-sans z-40">
-                Animations
-              </h2>{" "}
-            </div>
+          <img
+            src="https://ucarecdn.com/9aca1a86-c225-4af5-b436-76fd35d6659d/sushiWorld.jpg"
+            alt="SushiWorld"
+            className="mx-auto mt-8"
+          />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="Sushi italic font-sans  text-8xl  z-40">
+              Blender x Web design
+            </h2>{" "}
           </div>
         </a>
       </SwiperSlide>
@@ -91,7 +75,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434644206_399144172924608_7255756708533822728_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=9f807c&_nc_ohc=puSWccVbvScQ7kNvgFdtSvh&_nc_oc=Adjv0GF9HbkA0E_AnHe3x0vVzqqpVRkqV079HIzDf3vOpxWcYBh3ZBGi1EigsWTUZhrohZ9Q-buZdk2RzvxtA_aU&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gGMcDLey4vm20C_sM7ZswnpmPG5SIHMCEIbfLVNCNidBA&oe=67B3050C"
+            src="https://ucarecdn.com/7de84ec2-56df-49a5-b009-8f9c2cd74635/atom.jpg"
             alt="atomModel"
             className="mx-auto mt-6"
           />
@@ -109,13 +93,13 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/356788891_800656961457839_8550209978705014080_n.png?_nc_cat=105&ccb=1-7&_nc_sid=9f807c&_nc_ohc=Bkn5IbZffN4Q7kNvgHT3T-I&_nc_oc=Adj9QkkJU0JdE2gGgWrNzopKA_kLwvkaKmANqyVlNnvvurq-x4iNkNZqj__JK7PLWNaPCHvgs5xb2g3KVcH36sGB&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gGOJDRwglkJmwm-INZ4tIql3UGVAfiaE9SDl0g-OQDmTA&oe=67B2E72A"
+            src="https://ucarecdn.com/d5ad3890-341a-46b2-8fe4-fa72fc33acee/356788891_800656961457839_8550209978705014080_n.png"
             alt="lapland"
             className="mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
             <h2 className="Lapland italic font-sans  text-8xl  z-40">
-              Web Development{" "}
+              Frontend Development
             </h2>{" "}
           </div>
         </a>
@@ -127,7 +111,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449746215_691643916461095_5598000245293300920_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=ZAkeawRZyOMQ7kNvgHwBmA3&_nc_oc=Adg9TeMHIMPVF-AcQe9GZsyTqCI75EltXP_a4Pz-va7ij_NpyU9DOthGVn2asqGadUQVhUsNEEkrIroU5PjbhfIe&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gHaSaYzrMwB6YIGD4maQkaPWOCjD9moFD1Rf-FdHpH7Gg&oe=67B2FF3C"
+            src="https://ucarecdn.com/21321bdf-c509-4ab7-a204-8cdc5d878eb6/blenderxThreeFiber.jpg"
             alt="ScrollBlender"
             className="mx-auto mt-8"
           />
@@ -145,7 +129,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/434997285_1759516644539620_1668137813982040004_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_ohc=wia1b4CxfjUQ7kNvgGDjmpw&_nc_oc=Adgc_30S3gA2vDfh6Z_cphNuM4JXHgy4T_vS6GFIpySqnlvQjwCgdfxpeGtWjBd0pWX4PR9blXA-yTAuHCoOWrP-&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gF1FSQx_z2WPQAJwq4NyXSLUOR88yHaRFWcLFf89rRPkQ&oe=67B305B6"
+            src="https://ucarecdn.com/4caa85be-fb40-4593-a864-eab6b8b31061/skybox.jpg"
             alt="skyBox"
             className=" mx-auto mt-8"
           />
@@ -163,7 +147,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/435381914_965643411517912_2049324314017588983_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_ohc=axhrRawWazwQ7kNvgFWAplh&_nc_oc=AdiEwBEm0J2uzrDOQFG7AcfVqEFozYamxhhSTsEBsPsPsFWLevifV7LdvRF1N_I85gamq2dUB-r74ADlUehSzdi4&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gGMkelDWu4B0MbknITLe0c0WMmVpxOSYPDYU49Le1x-Aw&oe=67B2EE63"
+            src="https://ucarecdn.com/904a607f-961c-495b-8247-d76365585cf0/Captura%20de%20pantalla%202023-09-12%20064312.jpg"
             alt="sineWaves"
             className="mx-auto mt-8"
           />
@@ -181,7 +165,7 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/449937181_1527427404558774_353074505124488073_n.png?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_ohc=XdyQkD2ClR8Q7kNvgFBAkWL&_nc_oc=AdjTZh0altcCDDEzBWAyYuwkFFb1hFepRBiUruSl0uueZ2zQPs43eq0relUxqe8hLrX8ZhhWoJFtvLtdMRpRN12P&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gHGtRxq3MWtx3C41VH6qOkk9-udUlpErsbYRXp9mPZaOQ&oe=67B2EA51"
+            src="https://ucarecdn.com/d5ce90cd-746b-4f7e-89b0-31fa246d8840/spark.png"
             alt="sparkLight"
             className="mx-auto mt-8"
           />
@@ -200,32 +184,35 @@ export default () => {
           target="_blank"
         >
           <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/437527839_395907763249176_7168703913263305102_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_ohc=v_xnj9PDSGAQ7kNvgGaWHlt&_nc_oc=Adj5H1EJA_OisitWtdMDznySna1U2GgQKJ0pv-sZE6Xyk26zX6k3j1CpZrwSHo4iTC7duDVC8d0o6Ioerscl1lKY&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gGZLzrNKAT6MVq1T2KFJ5nsHh1L0R4xkQUYjMKdI1rBAA&oe=67B2F5A6"
+            src="https://ucarecdn.com/dc631276-2eed-4a20-b3d0-22697e29672a/logi.jpg"
             alt="logitech"
             className="mx-auto mt-8"
           />
           <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
             <h2 className="Logitech italic font-sans  text-8xl  z-40">
-              Animations
+              Landing Websites
             </h2>{" "}
           </div>
         </a>
       </SwiperSlide>
+
       <SwiperSlide className="cardsSwiper">
         <a
-          href="https://sushi-landing-six.vercel.app/"
-          aria-label="SushiAnimation"
+          href="https://cascos-landing.vercel.app/"
+          aria-label="cascos"
           target="_blank"
         >
-          <img
-            src="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/450784490_813581444220556_5405473915107737496_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9f807c&_nc_ohc=JQbG5y0Uv7MQ7kNvgHEFGfn&_nc_oc=AdihOT4AUW2gMktzNQkdJSGRf4Ff4kn7gKRn-5rDJGvQNjVv4sbSwQNIs7g7xGLryGp5nXjFvfA_uRvWWbSMn_mv&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1gFauQT2-51DbGbjx_fl-UEY7oYeS3xKebf9-CrntGgjOQ&oe=67B2E4C2"
-            alt="SushiWorld"
-            className="mx-auto mt-8"
-          />
-          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-            <h2 className="Sushi italic font-sans  text-8xl  z-40">
-              Blender x Web design
-            </h2>{" "}
+          <div className="relative">
+            <img
+              src="https://ucarecdn.com/d734f0ff-8e9f-40b7-a99e-028ed46140d8/362432012_2923533341110987_7059030799891607228_n.png"
+              alt="cascos"
+              className="mx-auto mt-8"
+            />
+            <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+              <h2 className="Helmets text-8xl italic font-sans z-40">
+                Landing Websites
+              </h2>{" "}
+            </div>
           </div>
         </a>
       </SwiperSlide>

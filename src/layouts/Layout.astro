@@ -4,7 +4,9 @@ import Experience from "../components/Experience.astro"
 import Studies from "../components/Studies.astro";
 import Footer from "../components/Footer.astro";
 import Projects from "../components/Projects.astro";
+import GameProjects from "../components/GameProjects.astro";
 import MenuProjects from "../components/MenuProjects"
+import GameProject from "../components/GamesProject"
 import ContactMe from "../components/ContactMe.astro";
 
 
@@ -30,6 +32,8 @@ const { title } = Astro.props;
 	<slot />
 		<Projects/>
 		<MenuProjects client:visible/>
+		<GameProjects/>
+		<GameProject client:visible/>
 		<Studies/>
 		<Experience/>
 		<ContactMe/> 
