@@ -3,71 +3,104 @@ import { onBeforeUnmount, onMounted, ref } from "vue";
 import {
   BufferAttribute,
   BufferGeometry,
-  EdgesGeometry,
+  CanvasTexture,
+  Color,
+  DynamicDrawUsage,
   Group,
-  IcosahedronGeometry,
   LineBasicMaterial,
   LineSegments,
+  Mesh,
+  MeshBasicMaterial,
   OrthographicCamera,
+  PlaneGeometry,
   Points,
   PointsMaterial,
+  SRGBColorSpace,
   Scene,
   WebGLRenderer,
 } from "three";
 
 /* ------------------------------------------------------------------ *
- *  Bacteriófago wireframe que camina de lado a lado de su contenedor.
+ *  Phage (vista cenital): cuerpo rectangular rosa con un punto naranja,
+ *  10 patas largas de 3 segmentos con articulaciones azules y una
+ *  antena naranja. Deambula por TODO el contenedor y camina de verdad:
+ *  cada pie se clava en el suelo y da un paso cuando se queda atrás.
  *  Uso:  <Phage client:visible />  dentro de un elemento `relative`.
  * ------------------------------------------------------------------ */
 
 const props = withDefaults(
   defineProps<{
-    surface?: "left" | "right" | "floor"; // por dónde camina: pared izquierda/derecha o suelo
-    height?: number; // alto del carril en px (solo si surface = "floor")
-    scale?: number; // tamaño del fago (1 = ~140px de alto)
+    scale?: number; // tamaño general (1 = cuerpo de 70px)
     speed?: number; // velocidad en px/s
-    margin?: number; // margen a cada lado en px
-    offset?: number; // separación de la superficie en px
-    headColor?: string;
-    bodyColor?: string;
-    legColor?: string;
+    margin?: number; // margen a los bordes en px
+    respectReducedMotion?: boolean; // true = se queda quieto si el sistema tiene "reducir movimiento"
+    bodyColor?: string; // borde del cuerpo
+    fillColor?: string; // relleno del cuerpo
+    legColor?: string; // patas y articulaciones
+    dotColor?: string; // punto y antena
   }>(),
   {
-    surface: "floor",
-    height: 180,
     scale: 1,
-    speed: 45,
-    margin: 24,
-    offset: 0,
-    headColor: "#ff4694",
-    bodyColor: "#776fff",
-    legColor: "#4de1ff",
+    speed: 55,
+    margin: 10,
+    respectReducedMotion: false,
+    bodyColor: "#ff4694",
+    fillColor: "#06030a",
+    legColor: "#4a46ff",
+    dotColor: "#ffa21a",
   }
 );
 
 const root = ref<HTMLDivElement>();
 const canvas = ref<HTMLCanvasElement>();
 
-// ---- Dimensiones del fago (unidades del mundo) ----
-const LEGS = 6;
-const HIP_Y = 30; // altura de la placa base
-const R_H = 12; // radio de la placa base (donde nacen las patas)
-const R_F = 54; // radio al que se apoyan los pies
-const L1 = 34; // hueso superior de la pata
-const L2 = 40; // hueso inferior
-const STRIDE = 16; // longitud de paso
-const LIFT = 14; // altura que sube el pie al avanzar
-const ELEV = 0.28; // inclinación 3/4 para que se vea la profundidad (rad)
+// ---- Dimensiones (unidades del mundo) ----
+const BODY_L = 70; // largo del cuerpo
+const BODY_W = 24; // ancho del cuerpo
+const PER_SIDE = 5; // patas por lado (10 en total)
+const L1 = 34, L2 = 46, L3 = 34; // los 3 segmentos de cada pata
+const LT = L1 + L2 + L3;
+const R_HOME = 80; // distancia a la que cada pie "quiere" apoyarse
+const STEP_DIST = 22; // si el pie se queda más atrás que esto, da un paso
+const SWING = 0.22; // duración de un paso (s)
+const ANT_LEN = 95; // largo de la antena
+const LEG_PX = 1.6; // espaciado de las líneas paralelas que simulan grosor (px)
 
-// Tipos de marcha: trípode (patas alternas 0,2,4 / 1,3,5)
-const angle = (k: number) => (k * Math.PI) / 3;
+type Leg = {
+  hu: number; hv: number; // cadera en el marco del cuerpo
+  hxl: number; hyl: number; // pie "casa" en el marco del cuerpo
+  group: number; // grupo de marcha (alternan)
+  zig: number; // sentido del zigzag
+};
+const legsDef: Leg[] = [];
+for (const side of [1, -1]) {
+  for (let j = 0; j < PER_SIDE; j++) {
+    const u = (j - (PER_SIDE - 1) / 2) / ((PER_SIDE - 1) / 2); // -1 (atrás) .. 1 (adelante)
+    const hu = u * BODY_L * 0.38;
+    const hv = side * (BODY_W / 2);
+    const a = side * (Math.PI / 2 - u * 0.6); // las patas delanteras se inclinan hacia adelante
+    legsDef.push({
+      hu,
+      hv,
+      hxl: hu + R_HOME * Math.cos(a),
+      hyl: hv + R_HOME * Math.sin(a),
+      group: (j + (side > 0 ? 0 : 1)) % 2,
+      zig: -side,
+    });
+  }
+}
+const LEGS = legsDef.length;
 
 let cleanup = () => {};
 
 onMounted(() => {
   const rootEl = root.value!;
   const canvasEl = canvas.value!;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Por defecto NO se congela con "reducir movimiento" (en muchos celulares está activo
+  // por ahorro de batería). Pon respectReducedMotion si prefieres respetarlo.
+  const reduced =
+    props.respectReducedMotion &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const renderer = new WebGLRenderer({ canvas: canvasEl, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -75,204 +108,337 @@ onMounted(() => {
 
   const scene = new Scene();
   const camera = new OrthographicCamera(-1, 1, 1, -1, -2000, 2000);
-
-  // ---------- Partes estáticas (dentro de `body`, que se traslada) ----------
-  const rig = new Group(); // se coloca y se gira según la superficie
-  const tilt = new Group(); // inclinación 3/4 alrededor del eje de caminata
-  tilt.rotation.x = ELEV;
-  rig.add(tilt);
-  scene.add(rig);
-  const body = new Group();
-  const headGroup = new Group(); // gira lento sobre su eje
-  body.add(headGroup);
-  tilt.add(body);
-
-  const lineMat = (color: string, opacity = 0.95) =>
-    new LineBasicMaterial({ color, transparent: true, opacity });
-  const pointMat = (color: string, size: number) =>
-    new PointsMaterial({ color, size, sizeAttenuation: false, transparent: true });
+  camera.position.set(0, 0, 600);
 
   const disposables: { dispose(): void }[] = [];
   const track = <T extends { dispose(): void }>(o: T) => (disposables.push(o), o);
 
-  // Cabeza: icosaedro alargado con un vértice (eje de 5) apuntando a la cola
-  const T = (1 + Math.sqrt(5)) / 2;
-  const headGeo = track(new IcosahedronGeometry(24, 0));
-  headGeo.rotateX(-Math.atan(T)); // un vértice queda sobre el eje Y
-  headGeo.scale(1, 1.3, 1); // cápside alargada
-  headGeo.translate(0, 108, 0);
-  const headEdges = track(new EdgesGeometry(headGeo));
-  headGroup.add(new LineSegments(headEdges, track(lineMat(props.headColor))));
+  // Textura de punto redondo
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d")!;
+  const gr = g.createRadialGradient(26, 24, 4, 32, 32, 30);
+  gr.addColorStop(0, "#ffffff");
+  gr.addColorStop(1, "#b5b5b5");
+  g.fillStyle = gr;
+  g.beginPath();
+  g.arc(32, 32, 30, 0, Math.PI * 2);
+  g.fill();
+  const dotTex = track(new CanvasTexture(c));
+  dotTex.colorSpace = SRGBColorSpace;
 
-  // Vértices de la cabeza como puntos brillantes (sin duplicados)
-  const hp = headGeo.attributes.position;
-  const seen = new Set<string>();
-  const hv: number[] = [];
-  for (let i = 0; i < hp.count; i++) {
-    const key = [hp.getX(i), hp.getY(i), hp.getZ(i)].map((n) => n.toFixed(2)).join();
-    if (!seen.has(key)) {
-      seen.add(key);
-      hv.push(hp.getX(i), hp.getY(i), hp.getZ(i));
-    }
-  }
-  const headPts = track(new BufferGeometry());
-  headPts.setAttribute("position", new BufferAttribute(new Float32Array(hv), 3));
-  headGroup.add(new Points(headPts, track(pointMat(props.headColor, 4))));
+  const pointMat = (size: number) =>
+    track(
+      new PointsMaterial({
+        size,
+        map: dotTex,
+        alphaTest: 0.5,
+        sizeAttenuation: false,
+        vertexColors: true,
+        depthTest: false,
+      })
+    );
 
-  // Collar, vaina de la cola (anillos + aristas) y placa base hexagonal
-  const hex = (y: number, r: number, i: number) => [
-    r * Math.cos(angle(i)),
-    y,
-    r * Math.sin(angle(i)),
-  ];
-  const seg: number[] = [];
-  const ring = (y: number, r: number) => {
-    for (let i = 0; i < 6; i++) seg.push(...hex(y, r, i), ...hex(y, r, (i + 1) % 6));
-  };
-  const SHEATH_TOP = 76;
-  const RINGS = 9;
-  for (let j = 0; j < RINGS; j++) ring(HIP_Y + ((SHEATH_TOP - HIP_Y) * j) / (RINGS - 1), 6);
-  for (let i = 0; i < 6; i++) seg.push(...hex(HIP_Y, 6, i), ...hex(SHEATH_TOP, 6, i));
-  ring(SHEATH_TOP, 10); // collar
-  ring(SHEATH_TOP + 2, 10);
-  ring(HIP_Y, R_H); // placa base
-  for (let i = 0; i < 6; i++) seg.push(0, HIP_Y, 0, ...hex(HIP_Y, R_H, i)); // radios
-  const sheathGeo = track(new BufferGeometry());
-  sheathGeo.setAttribute("position", new BufferAttribute(new Float32Array(seg), 3));
-  body.add(new LineSegments(sheathGeo, track(lineMat(props.bodyColor))));
-
-  // ---------- Patas (dinámicas, en coordenadas del mundo) ----------
-  const legPos = new Float32Array(LEGS * 4 * 3); // [cadera, rodilla, rodilla, pie] x 6
+  // ---------- Patas: 3 segmentos x 3 líneas paralelas (grosor) por pata ----------
+  const legArr = new Float32Array(LEGS * 3 * 3 * 2 * 3);
   const legGeo = track(new BufferGeometry());
-  legGeo.setAttribute("position", new BufferAttribute(legPos, 3));
-  const legs = new LineSegments(legGeo, track(lineMat(props.legColor)));
-  legs.frustumCulled = false;
-  tilt.add(legs);
+  legGeo.setAttribute("position", new BufferAttribute(legArr, 3));
+ 
+  const legMat = track(new LineBasicMaterial({ color: props.legColor, depthTest: false }));
+  const legLines = new LineSegments(legGeo, legMat);
+  legLines.frustumCulled = false;
+  legLines.renderOrder = 0;
+  scene.add(legLines);
 
-  const jointPos = new Float32Array(LEGS * 2 * 3); // rodilla + pie por pata
+  // Articulaciones y pies: 3 puntos por pata (rodilla 1, rodilla 2, pie)
+  const jointArr = new Float32Array(LEGS * 3 * 3);
+  const jointCol = new Float32Array(LEGS * 3 * 3);
   const jointGeo = track(new BufferGeometry());
-  jointGeo.setAttribute("position", new BufferAttribute(jointPos, 3));
-  const joints = new Points(jointGeo, track(pointMat(props.legColor, 4)));
+  jointGeo.setAttribute("position", new BufferAttribute(jointArr, 3));
+  jointGeo.setAttribute("color", new BufferAttribute(jointCol, 3));
+  const jointMat = pointMat(8);
+  const joints = new Points(jointGeo, jointMat);
   joints.frustumCulled = false;
-  tilt.add(joints);
+  joints.renderOrder = 1;
+  scene.add(joints);
 
-  // IK de 2 huesos: rodilla doblada hacia arriba y hacia afuera
-  function ik(
-    hx: number, hy: number, hz: number,
-    fx: number, fy: number, fz: number,
-    th: number, o: number
-  ) {
-    const dx = fx - hx, dy = fy - hy, dz = fz - hz;
-    const d = Math.hypot(dx, dy, dz) || 1e-6;
-    const nx = dx / d, ny = dy / d, nz = dz / d;
-    const dc = Math.min(L1 + L2 - 0.01, Math.max(Math.abs(L1 - L2) + 0.01, d));
-    const a = (L1 * L1 - L2 * L2 + dc * dc) / (2 * dc);
-    const hh = Math.sqrt(Math.max(0, L1 * L1 - a * a));
+  const cLeg = new Color(props.legColor);
+  const cLegLift = new Color(props.legColor).lerp(new Color("#ffffff"), 0.55); // pie en el aire
 
-    let px = Math.cos(th) * 0.6, py = 1, pz = Math.sin(th) * 0.6; // polo
-    const dot = px * nx + py * ny + pz * nz;
-    px -= dot * nx; py -= dot * ny; pz -= dot * nz;
-    const pl = Math.hypot(px, py, pz) || 1;
+  // ---------- Cuerpo (grupo que se mueve y rota) ----------
+  const bodyGroup = new Group();
+  scene.add(bodyGroup);
 
-    const kx = hx + nx * a + (px / pl) * hh;
-    const ky = hy + ny * a + (py / pl) * hh;
-    const kz = hz + nz * a + (pz / pl) * hh;
-    const ex = hx + nx * dc, ey = hy + ny * dc, ez = hz + nz * dc; // pie alcanzable
+  const planeGeo = track(new PlaneGeometry(BODY_L, BODY_W));
+  const outer = new Mesh(
+    planeGeo,
+    track(new MeshBasicMaterial({ color: props.bodyColor, depthTest: false }))
+  );
+  outer.renderOrder = 2;
+  bodyGroup.add(outer);
+  const inner = new Mesh(
+    planeGeo,
+    track(new MeshBasicMaterial({ color: props.fillColor, depthTest: false }))
+  );
+  inner.renderOrder = 3;
+  bodyGroup.add(inner);
 
-    legPos.set([hx, hy, hz, kx, ky, kz, kx, ky, kz, ex, ey, ez], o);
-    return [kx, ky, kz, ex, ey, ez];
-  }
+  // Punto naranja (cerca de la cabeza)
+  const dotArr = new Float32Array([BODY_L * 0.3, 0, 0]);
+  const dotColArr = new Float32Array([1, 1, 1]);
+  const dotGeo = track(new BufferGeometry());
+  dotGeo.setAttribute("position", new BufferAttribute(dotArr, 3));
+  dotGeo.setAttribute("color", new BufferAttribute(dotColArr, 3));
+  const dotColor = new Color(props.dotColor);
+  dotColArr.set([dotColor.r, dotColor.g, dotColor.b]);
+  const dotMat = pointMat(11);
+  const dot = new Points(dotGeo, dotMat);
+  dot.renderOrder = 5;
+  bodyGroup.add(dot);
 
-  // ---------- Estado de la caminata ----------
-  // bodyX = posición a lo largo del eje de caminata (en pared = vertical)
-  let bodyX = 0, dir = 1, h = 1;
-  let xmax = 120;
+  // Antena naranja: sale del punto hacia adelante, 2 segmentos x 3 líneas paralelas
+  const antArr = new Float32Array(2 * 3 * 2 * 3);
+  const antGeo = track(new BufferGeometry());
+  antGeo.setAttribute("position", new BufferAttribute(antArr, 3));
+  const ant = new LineSegments(
+    antGeo,
+    track(new LineBasicMaterial({ color: props.dotColor, depthTest: false }))
+  );
+  ant.frustumCulled = false;
+  ant.renderOrder = 4;
+  bodyGroup.add(ant);
+
+  // ---------- Estado ----------
+  let k = props.scale; // escala efectiva (se reduce sola en contenedores pequeños)
+  let halfW = 300, halfH = 200;
+  let bx = 0, by = 0, theta = 0; // posición y orientación del cuerpo
+  let tgx = 0, tgy = 0; // destino actual (deambula entre puntos aleatorios)
+  let time = 0;
+  let placed = false;
+  let speedNow = 0;
+
+  // Estado de cada pie
+  const footX = new Float64Array(LEGS), footY = new Float64Array(LEGS);
+  const swingOn = new Uint8Array(LEGS);
+  const sx = new Float64Array(LEGS), sy = new Float64Array(LEGS);
+  const tx = new Float64Array(LEGS), ty = new Float64Array(LEGS);
+  const st = new Float64Array(LEGS);
 
   const smooth = (t: number) => t * t * (3 - 2 * t);
+  const wrap = (a: number) => ((((a + Math.PI) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) - Math.PI;
+
+  function bounds() {
+    const pad = props.margin / k + 36;
+    return [Math.max(0, halfW - pad), Math.max(0, halfH - pad)];
+  }
+
+  function pickTarget() {
+    const [mx, my] = bounds();
+    const minD = Math.max(80, Math.min(mx, my) * 0.9);
+    for (let i = 0; i < 8; i++) {
+      tgx = (Math.random() * 2 - 1) * mx;
+      tgy = (Math.random() * 2 - 1) * my;
+      if (Math.hypot(tgx - bx, tgy - by) >= minD) break;
+    }
+  }
+
+  // Pie "casa" de la pata i en coordenadas del mundo
+  function worldX(u: number, v: number, c: number, s: number) { return bx + u * c - v * s; }
+  function worldY(u: number, v: number, c: number, s: number) { return by + u * s + v * c; }
+
+  function placeAll() {
+    const [mx, my] = bounds();
+    bx = (Math.random() * 2 - 1) * mx;
+    by = (Math.random() * 2 - 1) * my;
+    theta = Math.random() * Math.PI * 2;
+    pickTarget();
+    const c = Math.cos(theta), s = Math.sin(theta);
+    for (let i = 0; i < LEGS; i++) {
+      footX[i] = worldX(legsDef[i].hxl, legsDef[i].hyl, c, s);
+      footY[i] = worldY(legsDef[i].hxl, legsDef[i].hyl, c, s);
+      swingOn[i] = 0;
+    }
+  }
+
+  // IK de 3 segmentos (FABRIK) partiendo de un zigzag, para que quede estable
+  const PX = new Float64Array(4), PY = new Float64Array(4);
+  let rx = 0, ry = 0;
+  function place(ax: number, ay: number, bxp: number, byp: number, len: number) {
+    // punto a distancia `len` de (ax,ay) en dirección a (bxp,byp)
+    const dx = bxp - ax, dy = byp - ay;
+    const d = Math.hypot(dx, dy) || 1e-6;
+    rx = ax + (dx / d) * len;
+    ry = ay + (dy / d) * len;
+  }
+  function solveLeg(hx: number, hy: number, fx: number, fy: number, zig: number) {
+    const dx = fx - hx, dy = fy - hy;
+    const d = Math.hypot(dx, dy) || 1e-6;
+    const ux = dx / d, uy = dy / d, nx = -uy, ny = ux;
+    PX[0] = hx; PY[0] = hy;
+    if (d >= LT - 0.01) {
+      PX[1] = hx + ux * L1; PY[1] = hy + uy * L1;
+      PX[2] = hx + ux * (L1 + L2); PY[2] = hy + uy * (L1 + L2);
+      PX[3] = hx + ux * LT; PY[3] = hy + uy * LT;
+      return;
+    }
+    const z = (LT - d) * 0.5 + 3;
+    PX[1] = hx + ux * d * 0.3 + nx * z * zig;
+    PY[1] = hy + uy * d * 0.3 + ny * z * zig;
+    PX[2] = hx + ux * d * 0.7 - nx * z * zig * 0.8;
+    PY[2] = hy + uy * d * 0.7 - ny * z * zig * 0.8;
+    PX[3] = fx; PY[3] = fy;
+    for (let it = 0; it < 6; it++) {
+      // hacia atrás: desde el pie
+      PX[3] = fx; PY[3] = fy;
+      place(PX[3], PY[3], PX[2], PY[2], L3); PX[2] = rx; PY[2] = ry;
+      place(PX[2], PY[2], PX[1], PY[1], L2); PX[1] = rx; PY[1] = ry;
+      place(PX[1], PY[1], PX[0], PY[0], L1); PX[0] = rx; PY[0] = ry;
+      // hacia adelante: desde la cadera
+      PX[0] = hx; PY[0] = hy;
+      place(PX[0], PY[0], PX[1], PY[1], L1); PX[1] = rx; PY[1] = ry;
+      place(PX[1], PY[1], PX[2], PY[2], L2); PX[2] = rx; PY[2] = ry;
+      place(PX[2], PY[2], PX[3], PY[3], L3); PX[3] = rx; PY[3] = ry;
+    }
+  }
+
+  // 3 líneas paralelas por segmento (simulan grosor, WebGL solo dibuja 1px)
+  function writeSeg(arr: Float32Array, o: number, ax: number, ay: number, bxp: number, byp: number, th: number) {
+    const dx = bxp - ax, dy = byp - ay;
+    const l = Math.hypot(dx, dy) || 1;
+    const nx = -dy / l, ny = dx / l;
+    for (let q = -1; q <= 1; q++) {
+      const off = q * th;
+      arr[o++] = ax + nx * off; arr[o++] = ay + ny * off; arr[o++] = 0;
+      arr[o++] = bxp + nx * off; arr[o++] = byp + ny * off; arr[o++] = 0;
+    }
+    return o;
+  }
 
   function step(dt: number) {
-    const sw = props.speed / props.scale; // velocidad en unidades del mundo
-    if (bodyX >= xmax) dir = -1;
-    else if (bodyX <= -xmax) dir = 1;
+    time += dt;
+    const sw = props.speed / k;
 
-    // h va de +1 a -1 suavemente: el fago frena y retrocede (es simétrico, no necesita girar)
-    h += (dir - h) * Math.min(1, dt * 2.2);
-    bodyX = Math.max(-xmax, Math.min(xmax, bodyX + sw * h * dt));
+    // --- Deambular: gira hacia el destino y avanza (más lento si el giro es cerrado) ---
+    const desired = Math.atan2(tgy - by, tgx - bx);
+    const err = wrap(desired - theta);
+    const maxTurn = 2.2 * dt;
+    theta += Math.max(-maxTurn, Math.min(maxTurn, err));
+    speedNow = sw * (0.35 + 0.65 * Math.max(0, Math.cos(err)));
+    bx += Math.cos(theta) * speedNow * dt;
+    by += Math.sin(theta) * speedNow * dt;
+    const [mx, my] = bounds();
+    bx = Math.max(-mx, Math.min(mx, bx));
+    by = Math.max(-my, Math.min(my, by));
+    if (Math.hypot(tgx - bx, tgy - by) < 28) pickTarget();
 
-    // La fase del paso depende SOLO de la posición: los pies quedan clavados al
-    // suelo siempre, sin deslizarse, tanto al avanzar como al retroceder.
-    const cycle = bodyX / (2 * STRIDE);
-    const ah = Math.abs(h);
-    const bob = Math.sin(cycle * Math.PI * 4) * 1.5 * ah;
+    const c = Math.cos(theta), s = Math.sin(theta);
+    const th = (LEG_PX / 2) / k;
 
-    body.position.set(bodyX, bob, 0);
-    headGroup.rotation.y += dt * 0.5;
+    // --- Marcha: un pie da un paso cuando se queda atrás (grupos alternados) ---
+    const cnt = [0, 0];
+    for (let i = 0; i < LEGS; i++) if (swingOn[i]) cnt[legsDef[i].group]++;
 
-    for (let k = 0; k < LEGS; k++) {
-      const th = angle(k);
-      // fase de la pata: trípode (pares e impares en contrafase)
-      const phi = (((cycle + (k % 2) * 0.5) % 1) + 1) % 1;
-      let off: number, lift = 0;
-      if (phi < 0.5) {
-        // apoyo: el pie se queda fijo en el suelo (se mueve hacia atrás respecto al cuerpo)
-        off = STRIDE / 2 - (phi / 0.5) * STRIDE;
+    let lo = 0;
+    for (let i = 0; i < LEGS; i++) {
+      const leg = legsDef[i];
+      const hx = worldX(leg.hu, leg.hv, c, s);
+      const hy = worldY(leg.hu, leg.hv, c, s);
+      const homeX = worldX(leg.hxl, leg.hyl, c, s);
+      const homeY = worldY(leg.hxl, leg.hyl, c, s);
+
+      if (swingOn[i]) {
+        st[i] += dt / SWING;
+        if (st[i] >= 1) {
+          swingOn[i] = 0;
+          cnt[leg.group]--;
+          footX[i] = tx[i];
+          footY[i] = ty[i];
+        } else {
+          const e = smooth(st[i]);
+          footX[i] = sx[i] + (tx[i] - sx[i]) * e;
+          footY[i] = sy[i] + (ty[i] - sy[i]) * e;
+        }
       } else {
-        // balanceo: el pie sube y avanza al siguiente punto de apoyo
-        const q = (phi - 0.5) / 0.5;
-        off = -STRIDE / 2 + smooth(q) * STRIDE;
-        lift = Math.sin(Math.PI * q) * LIFT * ah;
+        const dist = Math.hypot(footX[i] - homeX, footY[i] - homeY);
+        const dHip = Math.hypot(footX[i] - hx, footY[i] - hy);
+        const hard = dHip > LT * 0.97; // a punto de no alcanzar: paso obligatorio
+        if ((dist > STEP_DIST && cnt[1 - leg.group] === 0) || hard) {
+          // destino: un poco por delante del pie "casa", en el sentido de avance
+          const lead = STEP_DIST * 1.1 * Math.min(1, speedNow / (sw || 1));
+          let ttx = homeX + Math.cos(theta) * lead;
+          let tty = homeY + Math.sin(theta) * lead;
+          const dh = Math.hypot(ttx - hx, tty - hy);
+          if (dh > LT * 0.92) {
+            ttx = hx + ((ttx - hx) / dh) * LT * 0.92;
+            tty = hy + ((tty - hy) / dh) * LT * 0.92;
+          }
+          swingOn[i] = 1;
+          st[i] = 0;
+          sx[i] = footX[i]; sy[i] = footY[i];
+          tx[i] = ttx; ty[i] = tty;
+          cnt[leg.group]++;
+        }
       }
 
-      const hx = bodyX + R_H * Math.cos(th);
-      const hy = HIP_Y + bob;
-      const hz = R_H * Math.sin(th);
-      const fx = bodyX + R_F * Math.cos(th) + off;
-      const fz = R_F * Math.sin(th);
+      solveLeg(hx, hy, footX[i], footY[i], leg.zig);
+      lo = writeSeg(legArr, lo, PX[0], PY[0], PX[1], PY[1], th);
+      lo = writeSeg(legArr, lo, PX[1], PY[1], PX[2], PY[2], th);
+      lo = writeSeg(legArr, lo, PX[2], PY[2], PX[3], PY[3], th);
 
-      const [kx, ky, kz, ex, ey, ez] = ik(hx, hy, hz, fx, lift, fz, th, k * 12);
-      jointPos.set([kx, ky, kz, ex, ey, ez], k * 6);
+      const j = i * 9;
+      jointArr[j] = PX[1]; jointArr[j + 1] = PY[1]; jointArr[j + 2] = 0;
+      jointArr[j + 3] = PX[2]; jointArr[j + 4] = PY[2]; jointArr[j + 5] = 0;
+      jointArr[j + 6] = PX[3]; jointArr[j + 7] = PY[3]; jointArr[j + 8] = 0;
+      const fc = swingOn[i] ? cLegLift : cLeg;
+      jointCol.set([cLeg.r, cLeg.g, cLeg.b, cLeg.r, cLeg.g, cLeg.b, fc.r, fc.g, fc.b], j);
     }
     legGeo.attributes.position.needsUpdate = true;
     jointGeo.attributes.position.needsUpdate = true;
+    jointGeo.attributes.color.needsUpdate = true;
+
+    // --- Cuerpo y antena ---
+    bodyGroup.position.set(bx, by, 0);
+    bodyGroup.rotation.z = theta;
+
+    const a0x = BODY_L * 0.3;
+    const sway1 = Math.sin(time * 2.2) * 6;
+    const sway2 = Math.sin(time * 2.2 + 0.8) * 16;
+    const thA = (1.1) / k;
+    let ao = 0;
+    ao = writeSeg(antArr, ao, a0x, 0, a0x + ANT_LEN * 0.5, sway1, thA);
+    writeSeg(antArr, ao, a0x + ANT_LEN * 0.5, sway1, a0x + ANT_LEN, sway2, thA);
+    antGeo.attributes.position.needsUpdate = true;
   }
 
-  // ---------- Tamaño y superficie ----------
+  // ---------- Tamaño ----------
   function resize() {
-    const k = props.scale;
-    const floor = props.surface === "floor";
     const w = rootEl.clientWidth || 300;
-    const H = floor ? props.height : rootEl.clientHeight || 300;
+    const H = rootEl.clientHeight || 300;
+
+    // En contenedores pequeños se encoge para que siempre tenga espacio de recorrido
+    const kFit = Math.min(w, H) / 300;
+    k = Math.max(0.4, Math.min(props.scale, kFit));
     renderer.setSize(w, H, false);
 
-    const halfW = w / (2 * k);
-    const halfH = H / (2 * k);
+    halfW = w / (2 * k);
+    halfH = H / (2 * k);
     camera.left = -halfW;
     camera.right = halfW;
     camera.top = halfH;
     camera.bottom = -halfH;
     camera.updateProjectionMatrix();
-    camera.position.set(0, 0, 600);
 
-    // El eje local x es la dirección de caminata y el local y es "arriba"
-    // (hacia fuera de la superficie). Se gira todo el conjunto para pegarlo a la superficie.
-    const gap = (6 + props.offset) / k;
-    let walkHalf: number;
-    if (floor) {
-      rig.rotation.z = 0;
-      rig.position.set(0, -halfH + gap, 0);
-      walkHalf = halfW;
-    } else if (props.surface === "right") {
-      rig.rotation.z = Math.PI / 2; // arriba = hacia la izquierda
-      rig.position.set(halfW - gap, 0, 0);
-      walkHalf = halfH;
-    } else {
-      rig.rotation.z = -Math.PI / 2; // arriba = hacia la derecha
-      rig.position.set(-halfW + gap, 0, 0);
-      walkHalf = halfH;
+    jointMat.size = 8 * k;
+    dotMat.size = 11 * k;
+    // borde rosa del cuerpo: ~2.5px sea cual sea la escala
+    const t = 5 / k;
+    outer.scale.set((BODY_L + t) / BODY_L, (BODY_W + t) / BODY_W, 1);
+
+    const [mx, my] = bounds();
+    if (!placed || Math.abs(bx) > mx + 40 || Math.abs(by) > my + 40) {
+      placeAll();
+      placed = true;
     }
-
-    xmax = Math.max(0, walkHalf - props.margin / k - R_F);
-    bodyX = Math.max(-xmax, Math.min(xmax, bodyX));
     if (reduced) {
       step(0);
       renderer.render(scene, camera);
@@ -283,9 +449,9 @@ onMounted(() => {
   ro.observe(rootEl);
   resize();
 
-  // Solo anima cuando el componente es visible (ahorra GPU/batería)
+  // Solo anima cuando es visible
   let visible = true;
-  const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+  const io = new IntersectionObserver(([en]) => (visible = en.isIntersecting));
   io.observe(rootEl);
 
   let raf = 0;
@@ -314,11 +480,7 @@ onBeforeUnmount(() => cleanup());
 
 <template>
   <div ref="root" class="phage-layer" aria-hidden="true">
-    <canvas
-      ref="canvas"
-      class="phage-canvas"
-      :style="surface === 'floor' ? { height: height + 'px', bottom: '0px' } : { top: '0px', height: '100%' }"
-    />
+    <canvas ref="canvas" class="phage-canvas" />
   </div>
 </template>
 
@@ -328,12 +490,13 @@ onBeforeUnmount(() => cleanup());
   inset: 0;
   overflow: hidden;
   pointer-events: none; /* no bloquea clics ni texto */
-  z-index: -5;
+  z-index: 5;
 }
 .phage-canvas {
   position: absolute;
-  left: 0;
+  inset: 0;
   width: 100%;
+  height: 100%;
   display: block;
 }
 </style>

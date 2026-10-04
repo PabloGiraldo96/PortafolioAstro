@@ -1,5 +1,5 @@
 ---
-
+import Wormie from "./Wormie.vue";
 ---
 
 <div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32 experienceContainer"  id="experience">
@@ -59,6 +59,12 @@
       </div>
     </div>
   </div>
+  <Wormie client:visible
+  speed={150}       
+  length={270}      
+  width={30}         
+  amplitude={16}     
+  wavelength={130}/>
 </div>
 
 <style>

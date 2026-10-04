@@ -30,6 +30,7 @@ const props = withDefaults(
     scale?: number; // tamaño (1 ≈ 150px de diámetro con fibras)
     speed?: number; // velocidad en px/s
     margin?: number; // margen a los bordes en px
+    respectReducedMotion?: boolean; // true = se queda quieto si el sistema tiene "reducir movimiento"
     wander?: number; // cuánto curva su trayectoria (rad/s). 0 = rebote recto
     density?: number; // esferas por arista de cada cara (más = cápside más densa)
     capsidColor?: string;
@@ -37,14 +38,15 @@ const props = withDefaults(
     knobColor?: string;
   }>(),
   {
-    scale: 1,
-    speed: 55,
+    scale: 1.5,
+    speed: 100,
     margin: 8,
+    respectReducedMotion: false,
     wander: 0.35,
-    density: 7,
+    density: 20,
     capsidColor: "#3D0023",
-    fiberColor: "#f2b01e",
-    knobColor: "#42B65E",
+    fiberColor: "#42B65E",
+    knobColor: "#f2b01e",
   }
 );
 
@@ -61,7 +63,11 @@ let cleanup = () => {};
 onMounted(() => {
   const rootEl = root.value!;
   const canvasEl = canvas.value!;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Por defecto NO se congela con "reducir movimiento" (en muchos celulares está activo
+  // por ahorro de batería y dejaba al virus quieto). Pon respectReducedMotion si lo prefieres.
+  const reduced =
+    props.respectReducedMotion &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const renderer = new WebGLRenderer({ canvas: canvasEl, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -212,6 +218,7 @@ onMounted(() => {
   let halfW = 300, halfH = 200, xmax = 100, ymax = 100;
   let time = 0;
   let placed = false;
+  let k = props.scale; // escala efectiva (se reduce sola en contenedores pequeños)
 
   // Dirección inicial: diagonal aleatoria
   {
@@ -226,7 +233,7 @@ onMounted(() => {
 
   function step(dt: number) {
     time += dt;
-    const sp = props.speed / props.scale; // unidades del mundo por segundo
+    const sp = props.speed / k; // unidades del mundo por segundo
 
     // La trayectoria curva suavemente (no solo rebotes rectos)
     const da = Math.sin(time * 0.35) * props.wander * dt;
@@ -294,7 +301,9 @@ onMounted(() => {
   function resize() {
     const w = rootEl.clientWidth || 300;
     const H = rootEl.clientHeight || 300;
-    const k = props.scale;
+    // Si el contenedor es pequeño (celular), el virus se encoge para poder moverse siempre
+    const kFit = Math.min(w, H) / (EXTENT * 2 * 1.8);
+    k = Math.max(0.35, Math.min(props.scale, kFit));
     renderer.setSize(w, H, false);
 
     halfW = w / (2 * k);
