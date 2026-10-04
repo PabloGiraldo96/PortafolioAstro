@@ -1,0 +1,42 @@
+---
+import Example from "../components/Example.vue";
+import Experience from "../components/Experience.astro"
+import Studies from "../components/Studies.astro";
+import Footer from "../components/Footer.astro";
+import Projects from "../components/Projects.astro";
+import GameProjects from "../components/GameProjects.astro";
+import MenuProjects from "../components/MenuProjects"
+import GameProject from "../components/GamesProject"
+import ContactMe from "../components/ContactMe.astro";
+
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="icon" href="https://scontent.feoh3-1.fna.fbcdn.net/v/t1.15752-9/453913443_1050135043400288_9162828592743020320_n.png?_nc_cat=108&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHja11jlxWz5A6m5d5hJOCIKgGRTGSWUC8qAZFMZJZQL9MkYHjLGhfBLpwVc13Q_VzUJ1o2iGCac8KjK0j7JkSy&_nc_ohc=a9vDHrnjLdMQ7kNvgFcSYDa&_nc_ht=scontent.feoh3-1.fna&oh=03_Q7cD1QERou2lOCMT3hrjD6cU2mh8zvc5GUSIlwJuUn9eftP0mA&oe=66E3AB3A" />
+		<meta name="generator" content={Astro.generator}/>
+		<title>{title}</title>		
+	</head>
+	<body>
+		<Example/>
+	<slot />
+		<Projects/>
+		<MenuProjects client:visible/>
+		<GameProjects/>
+		<GameProject client:visible/>
+		<Studies/>
+		<Experience/>
+		<ContactMe/> 
+	<Footer />
+	</body>
+</html>
