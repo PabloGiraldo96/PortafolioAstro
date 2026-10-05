@@ -55,15 +55,15 @@ const root = ref<HTMLDivElement>();
 const canvas = ref<HTMLCanvasElement>();
 
 // ---- Dimensiones (unidades del mundo) ----
-const BODY_L = 70; // largo del cuerpo
-const BODY_W = 24; // ancho del cuerpo
-const PER_SIDE = 5; // patas por lado (10 en total)
-const L1 = 34, L2 = 46, L3 = 34; // los 3 segmentos de cada pata
+const BODY_L = 64; // largo del cuerpo
+const BODY_W = 4; // ancho del cuerpo
+const PER_SIDE = 3; // patas por lado (10 en total)
+const L1 = 24, L2 = 56, L3 = 34; // los 3 segmentos de cada pata
 const LT = L1 + L2 + L3;
-const R_HOME = 80; // distancia a la que cada pie "quiere" apoyarse
-const STEP_DIST = 22; // si el pie se queda más atrás que esto, da un paso
+const R_HOME = 60; // distancia a la que cada pie "quiere" apoyarse
+const STEP_DIST = 30; // si el pie se queda más atrás que esto, da un paso
 const SWING = 0.22; // duración de un paso (s)
-const ANT_LEN = 95; // largo de la antena
+const ANT_LEN = 35; // largo de la antena
 const LEG_PX = 1.6; // espaciado de las líneas paralelas que simulan grosor (px)
 
 type Leg = {
@@ -490,7 +490,7 @@ onBeforeUnmount(() => cleanup());
   inset: 0;
   overflow: hidden;
   pointer-events: none; /* no bloquea clics ni texto */
-  z-index: 5;
+  z-index: -5;
 }
 .phage-canvas {
   position: absolute;

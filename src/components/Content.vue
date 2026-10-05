@@ -8,22 +8,22 @@ const matcapTextureTwo = await useTexture([
 </script>
 <template>
   <Text3D
-    :position="[-55, 0, 85]"
-    :size="18"
+    :position="[-5, 0, 85]"
+    :size="11"
     ref="textRef"
     font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
   >
     Juan Pablo Jaramillo Giraldo
-    <TresMeshMatcapMaterial :matcap="matcapTextureTwo" />
+    <TresMeshMatcapMaterial :matcap="matcapTextureTwo" color="#FFD166"/>
   </Text3D>
   <Text3D
-    :position="[-85, 45, -60]"
+    :position="[-215, 45, -60]"
     :size="25"
     ref="textRef"
     font="https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json"
   >
-    3D web animations
-    <TresMeshMatcapMaterial :matcap="matcapTextureTwo" />
+    3D Web Animations
+    <TresMeshMatcapMaterial :matcap="matcapTextureTwo"/>
   </Text3D>
 
 </template>

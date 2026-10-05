@@ -10,7 +10,7 @@ import {
   AdditiveBlending,
 } from "three";
 import { OrbitControls, Stars } from "@tresjs/cientos";
-import { onBeforeUnmount } from "vue";
+import { onBeforeUnmount, shallowRef } from "vue";
 import Text from "./Content.vue";
 
 const gl = {
@@ -39,7 +39,7 @@ const anchors: [number, number, number][] = [
   [-45, 30, 0],
 ];
 
-const TRAILS = 800; // cantidad de líneas simultáneas
+const TRAILS = 20; // cantidad de líneas simultáneas
 const SEG = 28; // puntos por línea (más = curva más suave)
 const ARROW_LEN = 7; // largo de las aletas de la punta de flecha
 const ARROW_W = 3; // apertura de las aletas
@@ -52,13 +52,13 @@ const MAX_LIFE = 6.5;
 
 // Onda senoidal: y = AMP * sin(FREQ * d + fase)
 // Para que TODAS sean idénticas, pon MIN = MAX.
-const AMP_MIN = 6; // amplitud (altura de la onda, en unidades del mundo)
-const AMP_MAX = 6;
-const FREQ_MIN = 0.08; // frecuencia (rad por unidad): ciclos = FREQ * dist / 2π
-const FREQ_MAX = 0.08;
-const RANDOM_PHASE = true; // false = todas arrancan con la misma fase
+const AMP_MIN = 0.25; // amplitud (altura de la onda, en unidades del mundo)
+const AMP_MAX = 12;
+const FREQ_MIN = 0.25; // frecuencia (rad por unidad): ciclos = FREQ * dist / 2π
+const FREQ_MAX = 0.04;
+const RANDOM_PHASE = false; // false = todas arrancan con la misma fase
 
-const palette = ["#ff4694", "#776fff", "#4de1ff", "#ffd166", "#9dff8a"].map(
+const palette = [ "#46FFF2", "#4de1ff", "#FFF600", "#A8EB12"].map(
   (c) => new Color(c)
 );
 
@@ -150,12 +150,39 @@ const lineMaterial = new LineBasicMaterial({
 const lines = new LineSegments(trailGeo, lineMaterial);
 lines.frustumCulled = false;
 
+/* ------------------------------------------------------------------ *
+ *  LATIDO de la esfera de estrellas: 1 pulso cada PULSE_PERIOD segundos.
+ *  Sube rápido (como un latido) y luego se relaja despacio.
+ * ------------------------------------------------------------------ */
+const PULSE_PERIOD = 20; // segundos entre pulsos
+const PULSE_AMP = 5; // cuánto crece la esfera en el pico (0.08 = +8 %)
+const PULSE_ATTACK = 0.50; // fracción del ciclo que dura la subida
+
+const starsGroup = shallowRef<any>(null);
+
+// Devuelve 0..1: 0 = reposo, 1 = pico del pulso
+function pulse(elapsed: number) {
+  const t = (elapsed % PULSE_PERIOD) / PULSE_PERIOD; // 0..1 dentro del ciclo
+  if (t < PULSE_ATTACK) {
+    const a = t / PULSE_ATTACK;
+    return a * a * (3 - 2 * a); // subida rápida y suave
+  }
+  const r = 1 - (t - PULSE_ATTACK) / (1 - PULSE_ATTACK); // 1 -> 0
+  return r * r * r; // bajada lenta
+}
+
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 const easeInQuad = (t: number) => t * t;
 
 const { onLoop } = useRenderLoop();
 
 onLoop(({ elapsed }) => {
+  // Latido de la esfera de estrellas
+  if (starsGroup.value) {
+    const sc = 1 + PULSE_AMP * pulse(elapsed);
+    starsGroup.value.scale.set(sc, sc, sc);
+  }
+
   for (let i = 0; i < TRAILS; i++) {
     let age = elapsed - birth[i];
     if (age > life[i]) {
@@ -240,11 +267,13 @@ onBeforeUnmount(() => {
 <template>
   <div class="tres-container">
     <TresCanvas v-bind="gl">
-      <TresPerspectiveCamera :position="[-150, -10, 380]" :look-at="[0, 0, 0]" />
+      <TresPerspectiveCamera :position="[200, 100, 260]" :look-at="[0, 0, 0]" />
       <OrbitControls />
 
       <!-- Esfera de estrellas más densa: sube count / size para más brillo -->
-      <Stars :radius="100" :depth="60" :count="20000" :size="1.2" />
+      <TresGroup ref="starsGroup">
+        <Stars :radius="10" :depth="80" :count="20000" :size="0.5" />
+      </TresGroup>
 
       <primitive :object="lines" />
 

@@ -38,7 +38,7 @@ const props = withDefaults(
     knobColor?: string;
   }>(),
   {
-    scale: 1.5,
+    scale: 1,
     speed: 100,
     margin: 8,
     respectReducedMotion: false,
