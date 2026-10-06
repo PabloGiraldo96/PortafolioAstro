@@ -10,14 +10,16 @@
     "astro": "astro"
   },
   "engines": {
-  "node": "24.x"
-},
+    "node": "24.x"
+  },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
     "@astrojs/react": "^3.3.0",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.0.10",
     "@midudev/tailwind-animations": "^0.0.7",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@tresjs/cientos": "^3.8.0",
     "@tresjs/core": "^3.7.0",
     "@types/react": "^18.2.79",

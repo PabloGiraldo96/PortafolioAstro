@@ -16,6 +16,25 @@ export default () => {
       onSlideChange={() => console.log("Slide Working")}
       className="h-74 bg-black z-0 hover:z-50"
     >
+            <SwiperSlide className="cardsSwiper">
+        <a
+          href="https://spaceship-world.vercel.app/"
+          aria-label="spaceShipScene"
+          target="_blank"
+        >
+          <img
+            src="https://ucarecdn.com/011fe87d-9aaf-4eed-b241-98d4de3a51eb/Captura%20de%20pantalla%202025-03-10%20123248.png"
+            alt="spaceShipScene"
+            className="mx-auto mt-6"
+          />
+          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
+            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
+              3D Web Modeling in game
+            </h2>{" "}
+          </div>
+        </a>
+      </SwiperSlide>
+      
       <SwiperSlide className="cardsSwiper">
         <a
           href="https://car-world-nine.vercel.app/"
@@ -37,24 +56,7 @@ export default () => {
         </a>
       </SwiperSlide>
 
-      <SwiperSlide className="cardsSwiper">
-        <a
-          href="https://spaceship-world.vercel.app/"
-          aria-label="spaceShipScene"
-          target="_blank"
-        >
-          <img
-            src="https://ucarecdn.com/011fe87d-9aaf-4eed-b241-98d4de3a51eb/Captura%20de%20pantalla%202025-03-10%20123248.png"
-            alt="spaceShipScene"
-            className="mx-auto mt-6"
-          />
-          <div className="absolute mt-5 left-0 w-full h-full flex items-center justify-center text-white opacity-0 hover:opacity-100">
-            <h2 className="ThirdTitle italic font-sans  text-8xl  z-40">
-              3D Web Modeling in game
-            </h2>{" "}
-          </div>
-        </a>
-      </SwiperSlide>
+
       <SwiperSlide className="cardsSwiper">
         <a
           href="https://lean-bunnies.vercel.app/"

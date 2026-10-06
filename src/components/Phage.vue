@@ -41,7 +41,7 @@ const props = withDefaults(
   }>(),
   {
     scale: 1,
-    speed: 55,
+    speed: 24,
     margin: 10,
     respectReducedMotion: false,
     bodyColor: "#ff4694",
@@ -57,19 +57,27 @@ const canvas = ref<HTMLCanvasElement>();
 // ---- Dimensiones (unidades del mundo) ----
 const BODY_L = 64; // largo del cuerpo
 const BODY_W = 4; // ancho del cuerpo
-const PER_SIDE = 3; // patas por lado (10 en total)
+const PER_SIDE = 3; // patas por lado (6 en total, como un insecto)
 const L1 = 24, L2 = 56, L3 = 34; // los 3 segmentos de cada pata
 const LT = L1 + L2 + L3;
 const R_HOME = 60; // distancia a la que cada pie "quiere" apoyarse
-const STEP_DIST = 30; // si el pie se queda más atrás que esto, da un paso
-const SWING = 0.22; // duración de un paso (s)
+const STEP_DIST = 20; // si el pie se queda más atrás que esto, da un paso
+const SWING = 0.34; // duración de un paso (s): los insectos palo son lentos y deliberados
 const ANT_LEN = 35; // largo de la antena
 const LEG_PX = 1.6; // espaciado de las líneas paralelas que simulan grosor (px)
+
+// ---- Comportamiento de insecto palo ----
+const LEG_SPLAY = 1.0; // cuánto se abren las patas: las delanteras apuntan adelante, las traseras atrás
+const MAX_SWING = 2; // máximo de patas en el aire a la vez (1 por lado)
+const TURN = 1.0; // velocidad de giro (rad/s): gira despacio
+const SWAY_AMP = 0.07; // balanceo del cuerpo, como una ramita movida por el viento (rad)
+const SWAY_HZ = 0.8; // balanceos por segundo
 
 type Leg = {
   hu: number; hv: number; // cadera en el marco del cuerpo
   hxl: number; hyl: number; // pie "casa" en el marco del cuerpo
-  group: number; // grupo de marcha (alternan)
+  side: number; // 1 = izquierda, -1 = derecha
+  j: number; // 0 = pata trasera ... PER_SIDE-1 = pata delantera
   zig: number; // sentido del zigzag
 };
 const legsDef: Leg[] = [];
@@ -78,13 +86,14 @@ for (const side of [1, -1]) {
     const u = (j - (PER_SIDE - 1) / 2) / ((PER_SIDE - 1) / 2); // -1 (atrás) .. 1 (adelante)
     const hu = u * BODY_L * 0.38;
     const hv = side * (BODY_W / 2);
-    const a = side * (Math.PI / 2 - u * 0.6); // las patas delanteras se inclinan hacia adelante
+    const a = side * (Math.PI / 2 - u * LEG_SPLAY); // delanteras hacia adelante, traseras hacia atrás
     legsDef.push({
       hu,
       hv,
       hxl: hu + R_HOME * Math.cos(a),
       hyl: hv + R_HOME * Math.sin(a),
-      group: (j + (side > 0 ? 0 : 1)) % 2,
+      side,
+      j,
       zig: -side,
     });
   }
@@ -143,7 +152,6 @@ onMounted(() => {
   const legArr = new Float32Array(LEGS * 3 * 3 * 2 * 3);
   const legGeo = track(new BufferGeometry());
   legGeo.setAttribute("position", new BufferAttribute(legArr, 3));
- 
   const legMat = track(new LineBasicMaterial({ color: props.legColor, depthTest: false }));
   const legLines = new LineSegments(legGeo, legMat);
   legLines.frustumCulled = false;
@@ -216,6 +224,12 @@ onMounted(() => {
   let time = 0;
   let placed = false;
   let speedNow = 0;
+  let moving = true; // true = camina, false = se queda quieto balanceándose
+  let behTimer = 4 + Math.random() * 3;
+
+  const lastEnd = new Float64Array(LEGS).fill(-9); // cuándo tocó suelo cada pie por última vez
+  const hipX = new Float64Array(LEGS), hipY = new Float64Array(LEGS);
+  const homeXs = new Float64Array(LEGS), homeYs = new Float64Array(LEGS);
 
   // Estado de cada pie
   const footX = new Float64Array(LEGS), footY = new Float64Array(LEGS);
@@ -314,73 +328,140 @@ onMounted(() => {
     return o;
   }
 
+  const contra = (i: number) => (i + PER_SIDE) % LEGS; // pata opuesta (mismo j, otro lado)
+
   function step(dt: number) {
     time += dt;
     const sw = props.speed / k;
 
-    // --- Deambular: gira hacia el destino y avanza (más lento si el giro es cerrado) ---
+    // --- Comportamiento: camina un rato y se queda quieto, como una ramita ---
+    behTimer -= dt;
+    if (behTimer <= 0) {
+      moving = !moving;
+      if (moving) {
+        behTimer = 4 + Math.random() * 5;
+        pickTarget();
+      } else {
+        behTimer = 1.5 + Math.random() * 2.5;
+      }
+    }
+
+    // --- Avance lento; gira despacio y casi se detiene en los giros cerrados ---
     const desired = Math.atan2(tgy - by, tgx - bx);
     const err = wrap(desired - theta);
-    const maxTurn = 2.2 * dt;
-    theta += Math.max(-maxTurn, Math.min(maxTurn, err));
-    speedNow = sw * (0.35 + 0.65 * Math.max(0, Math.cos(err)));
+    let targetSpeed = 0;
+    if (moving) {
+      const maxTurn = TURN * dt;
+      theta += Math.max(-maxTurn, Math.min(maxTurn, err));
+      const ce = Math.max(0, Math.cos(err));
+      targetSpeed = sw * Math.max(0.08, ce * ce);
+    }
+    speedNow += (targetSpeed - speedNow) * Math.min(1, dt * 2.5); // acelera/frena suave
     bx += Math.cos(theta) * speedNow * dt;
     by += Math.sin(theta) * speedNow * dt;
     const [mx, my] = bounds();
     bx = Math.max(-mx, Math.min(mx, bx));
     by = Math.max(-my, Math.min(my, by));
-    if (Math.hypot(tgx - bx, tgy - by) < 28) pickTarget();
+    if (moving && Math.hypot(tgx - bx, tgy - by) < 28) {
+      moving = false; // llegó: se queda quieto un momento
+      behTimer = 1.5 + Math.random() * 2.5;
+    }
 
-    const c = Math.cos(theta), s = Math.sin(theta);
+    // Balanceo del cuerpo (más marcado cuando está quieto)
+    const ang = theta + Math.sin(time * SWAY_HZ * Math.PI * 2) * SWAY_AMP * (moving ? 1 : 1.6);
+    const c = Math.cos(ang), s = Math.sin(ang);
     const th = (LEG_PX / 2) / k;
 
-    // --- Marcha: un pie da un paso cuando se queda atrás (grupos alternados) ---
-    const cnt = [0, 0];
-    for (let i = 0; i < LEGS; i++) if (swingOn[i]) cnt[legsDef[i].group]++;
-
-    let lo = 0;
+    // Cadera y pie "casa" de cada pata
     for (let i = 0; i < LEGS; i++) {
       const leg = legsDef[i];
-      const hx = worldX(leg.hu, leg.hv, c, s);
-      const hy = worldY(leg.hu, leg.hv, c, s);
-      const homeX = worldX(leg.hxl, leg.hyl, c, s);
-      const homeY = worldY(leg.hxl, leg.hyl, c, s);
+      hipX[i] = worldX(leg.hu, leg.hv, c, s);
+      hipY[i] = worldY(leg.hu, leg.hv, c, s);
+      homeXs[i] = worldX(leg.hxl, leg.hyl, c, s);
+      homeYs[i] = worldY(leg.hxl, leg.hyl, c, s);
+    }
 
-      if (swingOn[i]) {
-        st[i] += dt / SWING;
-        if (st[i] >= 1) {
-          swingOn[i] = 0;
-          cnt[leg.group]--;
-          footX[i] = tx[i];
-          footY[i] = ty[i];
-        } else {
-          const e = smooth(st[i]);
-          footX[i] = sx[i] + (tx[i] - sx[i]) * e;
-          footY[i] = sy[i] + (ty[i] - sy[i]) * e;
-        }
+    // --- Marcha de ola (metacronal), como un insecto palo ---
+    // 1) Avanzar los pasos que están en el aire
+    let swingTotal = 0;
+    const sideSwing = [0, 0];
+    for (let i = 0; i < LEGS; i++) {
+      if (!swingOn[i]) continue;
+      st[i] += dt / SWING;
+      if (st[i] >= 1) {
+        swingOn[i] = 0;
+        footX[i] = tx[i];
+        footY[i] = ty[i];
+        lastEnd[i] = time;
       } else {
-        const dist = Math.hypot(footX[i] - homeX, footY[i] - homeY);
-        const dHip = Math.hypot(footX[i] - hx, footY[i] - hy);
-        const hard = dHip > LT * 0.97; // a punto de no alcanzar: paso obligatorio
-        if ((dist > STEP_DIST && cnt[1 - leg.group] === 0) || hard) {
-          // destino: un poco por delante del pie "casa", en el sentido de avance
-          const lead = STEP_DIST * 1.1 * Math.min(1, speedNow / (sw || 1));
-          let ttx = homeX + Math.cos(theta) * lead;
-          let tty = homeY + Math.sin(theta) * lead;
-          const dh = Math.hypot(ttx - hx, tty - hy);
-          if (dh > LT * 0.92) {
-            ttx = hx + ((ttx - hx) / dh) * LT * 0.92;
-            tty = hy + ((tty - hy) / dh) * LT * 0.92;
-          }
-          swingOn[i] = 1;
-          st[i] = 0;
-          sx[i] = footX[i]; sy[i] = footY[i];
-          tx[i] = ttx; ty[i] = tty;
-          cnt[leg.group]++;
-        }
+        const e = smooth(st[i]);
+        footX[i] = sx[i] + (tx[i] - sx[i]) * e;
+        footY[i] = sy[i] + (ty[i] - sy[i]) * e;
+        swingTotal++;
+        sideSwing[legsDef[i].side > 0 ? 0 : 1]++;
       }
+    }
 
-      solveLeg(hx, hy, footX[i], footY[i], leg.zig);
+    // 2) Decidir qué pata levanta el pie. Reglas (Cruse):
+    //    - no levanta si la pata de detrás (mismo lado) está en el aire
+    //    - no levanta si su pata opuesta está en el aire
+    //    - máximo una pata en el aire por lado
+    //    Gana la que más se ha quedado atrás; las traseras tienen prioridad,
+    //    así la ola de pasos va de atrás hacia adelante.
+    for (let guard = 0; guard < LEGS; guard++) {
+      let best = -1, bestU = 0;
+      for (let i = 0; i < LEGS; i++) {
+        if (swingOn[i]) continue;
+        const leg = legsDef[i];
+        const ddx = homeXs[i] - footX[i], ddy = homeYs[i] - footY[i];
+        const along = ddx * Math.cos(theta) + ddy * Math.sin(theta); // >0 = pie rezagado
+        const lat = Math.abs(-ddx * Math.sin(theta) + ddy * Math.cos(theta));
+        const dist = Math.max(along, lat / 1.4, Math.hypot(ddx, ddy) / 1.8);
+        const dHip = Math.hypot(footX[i] - hipX[i], footY[i] - hipY[i]);
+        const hard = dHip > LT * 0.97; // a punto de no alcanzar: paso obligatorio
+        let urgency = 0;
+        if (hard) {
+          urgency = 1e6;
+        } else if (dist > STEP_DIST) {
+          const sideIdx = leg.side > 0 ? 0 : 1;
+          const ok =
+            swingTotal < MAX_SWING &&
+            sideSwing[sideIdx] < 1 &&
+            (leg.j === 0 || !swingOn[i - 1]) &&
+            !swingOn[contra(i)];
+          if (ok) {
+            urgency = dist * (1 + 0.15 * (PER_SIDE - 1 - leg.j));
+            // Regla de facilitación: tras apoyar la pata anterior de la ola, esta levanta pronto
+            const prevLeg = leg.j === 0 ? i + PER_SIDE - 1 : i - 1;
+            if (time - lastEnd[prevLeg] < 0.6) urgency *= 2;
+          }
+        }
+        if (urgency > bestU) { bestU = urgency; best = i; }
+      }
+      if (best < 0) break;
+
+      // destino: un poco por delante del pie "casa" en el sentido de avance
+      const i = best;
+      const lead = STEP_DIST * 1.5 * Math.min(1, speedNow / (sw || 1));
+      let ttx = homeXs[i] + Math.cos(theta) * lead;
+      let tty = homeYs[i] + Math.sin(theta) * lead;
+      const dh = Math.hypot(ttx - hipX[i], tty - hipY[i]);
+      if (dh > LT * 0.92) {
+        ttx = hipX[i] + ((ttx - hipX[i]) / dh) * LT * 0.92;
+        tty = hipY[i] + ((tty - hipY[i]) / dh) * LT * 0.92;
+      }
+      swingOn[i] = 1;
+      st[i] = 0;
+      sx[i] = footX[i]; sy[i] = footY[i];
+      tx[i] = ttx; ty[i] = tty;
+      swingTotal++;
+      sideSwing[legsDef[i].side > 0 ? 0 : 1]++;
+    }
+
+    // 3) Resolver y dibujar las patas
+    let lo = 0;
+    for (let i = 0; i < LEGS; i++) {
+      solveLeg(hipX[i], hipY[i], footX[i], footY[i], legsDef[i].zig);
       lo = writeSeg(legArr, lo, PX[0], PY[0], PX[1], PY[1], th);
       lo = writeSeg(legArr, lo, PX[1], PY[1], PX[2], PY[2], th);
       lo = writeSeg(legArr, lo, PX[2], PY[2], PX[3], PY[3], th);
@@ -398,7 +479,7 @@ onMounted(() => {
 
     // --- Cuerpo y antena ---
     bodyGroup.position.set(bx, by, 0);
-    bodyGroup.rotation.z = theta;
+    bodyGroup.rotation.z = ang;
 
     const a0x = BODY_L * 0.3;
     const sway1 = Math.sin(time * 2.2) * 6;
@@ -490,7 +571,7 @@ onBeforeUnmount(() => cleanup());
   inset: 0;
   overflow: hidden;
   pointer-events: none; /* no bloquea clics ni texto */
-  z-index: -5;
+  z-index: 5;
 }
 .phage-canvas {
   position: absolute;
