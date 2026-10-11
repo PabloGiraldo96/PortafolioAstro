@@ -1,182 +1,73 @@
-.cardsSwiper {
-  height: 50vh;
-  opacity: 0.7;
-  transition: opacity 15s ease-in 2s;
-  /*z-index: 1; Ajuste general para el Swiper*/
-  position: relative;
+/* Un solo degradado continuo para TODA la página (banner → contacto).
+   Toda la gama es violeta profundo → azul noche con luminosidad muy parecida, así que no hay
+   cortes entre secciones. Las secciones deben ser TRANSPARENTES para que se vea.            */
+:root {
+  --bg-0: #0c050f; /* banner (= clearColor del canvas) */
+  --bg-1: #130a1f;
+  --bg-2: #1a0f2e; /* violeta */
+  --bg-3: #17142f;
+  --bg-4: #121830; /* azul noche (cerca del fondo del About actual) */
+  --bg-5: #0b1020; /* contacto / pie */
+
+  --glow-violet: rgba(138, 58, 140, 0.34); /* el magenta del About */
+  --glow-cyan: rgba(70, 255, 242, 0.09); /* mismo cian de las trazas del banner */
+  --text: #e9e6f2;
+  --text-dim: #b9b4cc;
 }
 
-.cardsSwiper:hover {
-  opacity: 0.4;
-  transition: ease-in 2s;
+html {
+  background: var(--bg-5); /* lo que se ve al "rebotar" el scroll abajo */
+  scroll-behavior: auto;
 }
 
-.cardsSwiper div {
-  position: relative;
-  margin-bottom: -170px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  /* capas: brillos suaves arriba, degradado vertical continuo abajo */
+  background:
+    radial-gradient(min(60rem, 140vw) 38rem at 14% 14%, var(--glow-violet), transparent 70%),
+    radial-gradient(min(52rem, 130vw) 34rem at 88% 40%, var(--glow-cyan), transparent 70%),
+    radial-gradient(min(60rem, 140vw) 38rem at 18% 74%, rgba(138, 58, 140, 0.2), transparent 70%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 10%, var(--bg-2) 28%, var(--bg-3) 50%, var(--bg-4) 72%, var(--bg-5) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
-.cardsSwiper div h2 {
-  color: rgb(235, 75, 12);
-  letter-spacing: 8px;
+/* Secciones: sin fondo propio, mismo ritmo de espaciado en todos los tamaños */
+.section {
   position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-  top: 80%;
-  left: 30%;
-  transform: translate(-23%, -180%);
+  background: transparent;
+  padding: clamp(4.5rem, 9vw, 9rem) clamp(1.25rem, 6vw, 6rem);
 }
-.cardsSwiper .secondTitle {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-  top: 80%;
-  left: 30%;
-  transform: translate(-35%, 20%);
-}
-.cardsSwiper .Logitech {
-  color: rgb(235, 75, 12);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-  top: 80%;
-  left: 30%;
-  transform: translate(-5%, -95%);
-}
-.cardsSwiper .ThirdTitle {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-}
-.cardsSwiper .SkyBox {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-  transform: translate(-15%, -130%);
-}
-.cardsSwiper .Lapland {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-}
-.cardsSwiper .Waves {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 75px;
-  text-align: center;
-  transform: translate(-35%, 20%);
-}
-.cardsSwiper .Sushi {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 80px;
-  text-align: center;
-  top: 90;
-  left: 30%;
-  transform: translate(-30%, 200%);
-}
-/*.cardsSwiper .ThirdTitle {
-  color: rgb(255, 255, 255);
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 20;
-  font-size: 120px;
-  text-align: center;
-}*/
-
-.cardsSwiper div:hover {
-  opacity: 1;
-}
-
-.cardsSwiper .absolute {
-  transition: opacity 1s ease-in-out 1s;
-  top: -550px;
-}
-
-.cardsSwiper:hover .absolute {
-  /*z-index: 20;*/
-  position: relative;
-  opacity: 1;
-  transition: ease-in 1s;
-}
-
-@media only screen and (max-width: 545px) {
-  .cardsSwiper {
-    height: 110vh;
-    flex-direction: column;
-    margin-bottom: -120px;
-    font-size: 30px;
-  }
-}
-@media only screen and (max-width: 445px) {
-  .cardsSwiper {
-    height: 110vh;
-    flex-direction: column;
-    margin-bottom: -120px;
-    font-size: 30px;
+@media (max-width: 640px) {
+  .section {
+    padding-block: clamp(3.5rem, 14vw, 5rem);
   }
 }
 
-@media only screen and (max-width: 414px) {
-  .cardsSwiper {
-    height: 110vh;
-    flex-direction: column;
-    font-size: 30px;
-    margin-bottom: -120px;
-  }
+/* --- Animaciones de scroll ---------------------------------------------------- */
+/* Solo se oculta si hay JS y se permite el movimiento (la clase .anim la pone useScrollAnimations) */
+html.anim [data-reveal] {
+  opacity: 0;
+}
+[data-section-inner] {
+  transform-origin: 50% 0%;
+  will-change: transform, opacity;
 }
 
-@media only screen and (max-width: 425px) {
-  .cardsSwiper {
-    height: 90vh;
-    flex-direction: column;
-    font-size: 30px;
-    margin-bottom: -120px;
-  }
+/* Lenis (reglas de su documentación) */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
-
-@media only screen and (max-width: 410px) {
-  .cardsSwiper {
-    height: 90vh;
-    flex-direction: column;
-    font-size: 30px;
-    margin-bottom: -120px;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
-
-@media only screen and (max-width: 390px) {
-  .cardsSwiper {
-    height: 250vh;
-    flex-direction: column;
-    font-size: 30px;
-    margin-bottom: -120px;
-  }
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
-
-@media only screen and (max-width: 320px) {
-  .cardsSwiper {
-    height: 90vh;
-    flex-direction: column;
-    font-size: 30px;
-    margin-bottom: -120px;
-  }
+/* Swiper u otros bloques con su propio scroll: ponles data-lenis-prevent */
+[data-lenis-prevent] {
+  overscroll-behavior: contain;
 }

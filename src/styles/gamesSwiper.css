@@ -1,0 +1,160 @@
+/* Carrusel de Games: animaciones suaves de fade in / fade out.
+   Se usan las propiedades `translate`, `scale` y `filter` (no `transform`) para no chocar con las
+   transformaciones que Swiper y Tailwind aplican por su cuenta.                                  */
+
+.gs-root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* salida suave (easeOutQuint) */
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --travel: 56px; /* cuánto sube el carrusel al entrar */
+  --blur: 8px;
+  position: relative;
+  z-index: 0; /* el hover:z-50 que estaba en <Swiper> ahora vive aquí (ver abajo) */
+  will-change: opacity, translate, scale;
+}
+.gs-root:hover {
+  z-index: 50;
+}
+@media (max-width: 640px) {
+  .gs-root {
+    --travel: 28px;
+    --blur: 4px;
+  }
+}
+
+/* ---------------------------------------------------------------------------------
+   1) Entrada / salida de TODO el carrusel según el scroll
+   --------------------------------------------------------------------------------- */
+@keyframes gs-root-in {
+  from { opacity: 0; translate: 0 var(--travel); scale: 0.97; }
+  to   { opacity: 1; translate: 0 0; scale: 1; }
+}
+@keyframes gs-root-out {
+  from { opacity: 1; translate: 0 0; scale: 1; }
+  to   { opacity: 0; translate: 0 calc(var(--travel) * -0.6); scale: 0.985; }
+}
+
+/* Chromium y Safari recientes: animación dirigida por el scroll, en el hilo del compositor */
+@supports (animation-timeline: view()) {
+  .gs-root {
+    /* in: `both` · out: `forwards`, para que el fade-out (va después) no tape al fade-in */
+    animation: gs-root-in var(--ease) both, gs-root-out var(--ease-in) forwards;
+    animation-timeline: view(), view();
+    animation-range: entry 0% entry 65%, exit 30% exit 90%;
+  }
+}
+
+/* Plan B (Firefox, etc.): transiciones + IntersectionObserver (ver useScrollFade en el .jsx) */
+@supports not (animation-timeline: view()) {
+  .gs-root {
+    opacity: 0;
+    translate: 0 var(--travel);
+    scale: 0.97;
+    transition: opacity 0.7s var(--ease-in), translate 0.7s var(--ease-in), scale 0.7s var(--ease-in);
+  }
+  .gs-root.is-above:not(.is-visible) {
+    translate: 0 calc(var(--travel) * -0.6); /* si salió por arriba, se va hacia arriba */
+    scale: 0.985;
+  }
+  .gs-root.is-visible {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    transition: opacity 1.2s var(--ease), translate 1.2s var(--ease), scale 1.2s var(--ease);
+  }
+}
+
+/* ---------------------------------------------------------------------------------
+   2) Cambio de slide: el que sale se desvanece y el que entra aparece desde el desenfoque,
+      mientras Swiper los desliza. Usa las clases que Swiper pone solo (funciona en cualquier versión).
+   --------------------------------------------------------------------------------- */
+.gs-swiper .swiper-wrapper {
+  transition-timing-function: var(--ease); /* curva suave para el deslizamiento */
+}
+.gs-slide {
+  opacity: 0;
+  filter: blur(6px);
+  scale: 0.96;
+  transition: opacity 0.9s var(--ease), filter 0.9s var(--ease), scale 0.9s var(--ease);
+}
+/* Al arrastrar se alcanza a ver el vecino, atenuado */
+.gs-slide.swiper-slide-prev,
+.gs-slide.swiper-slide-next {
+  opacity: 0.25;
+  filter: blur(4px);
+}
+.gs-slide.swiper-slide-active {
+  opacity: 1;
+  filter: none;
+  scale: none; /* `none` (no 1) para no crear contexto de apilamiento de más */
+}
+
+/* La imagen "se asienta" con un zoom lento al activarse */
+.gs-img {
+  scale: 1.08;
+  transition: scale 1.8s var(--ease), filter 0.8s var(--ease);
+}
+.swiper-slide-active .gs-img {
+  scale: 1;
+}
+
+/* ---------------------------------------------------------------------------------
+   3) Hover / foco: la imagen se oscurece y el título aparece con fade + subida + desenfoque
+   --------------------------------------------------------------------------------- */
+.gs-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s var(--ease);
+}
+.gs-title {
+  opacity: 0;
+  translate: 0 20px;
+  filter: blur(var(--blur));
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.55);
+  transition: opacity 0.9s var(--ease), translate 0.9s var(--ease), filter 0.9s var(--ease);
+}
+.gs-frame:hover .gs-overlay,
+.gs-frame:focus-within .gs-overlay {
+  opacity: 1;
+}
+.gs-frame:hover .gs-title,
+.gs-frame:focus-within .gs-title {
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
+  transition-delay: 0.08s; /* la imagen oscurece primero, el título llega un instante después */
+}
+.swiper-slide-active .gs-frame:hover .gs-img,
+.swiper-slide-active .gs-frame:focus-within .gs-img {
+  scale: 1.035;
+  filter: brightness(0.5) saturate(1.1);
+}
+
+/* Slides sin título (p. ej. OGHouse): nada que mostrar, así que no se oscurecen ni se acercan al hover */
+.swiper-slide-active .gs-frame.gs-plain:hover .gs-img,
+.swiper-slide-active .gs-frame.gs-plain:focus-within .gs-img {
+  scale: 1;
+  filter: none;
+}
+
+/* Pantallas táctiles: no hay hover, así que el título se muestra siempre */
+@media (hover: none) {
+  .gs-overlay { opacity: 1; }
+  .gs-title { opacity: 1; translate: 0 0; filter: none; }
+  .gs-img { filter: brightness(0.6); }
+  .gs-frame.gs-plain .gs-img { filter: none; }
+}
+
+/* Reducir movimiento: todo visible y sin animar (al final para ganar la cascada) */
+@media (prefers-reduced-motion: reduce) {
+  .gs-root,
+  .gs-slide,
+  .gs-img,
+  .gs-overlay,
+  .gs-title {
+    animation: none !important;
+    transition: none !important;
+  }
+  .gs-root { opacity: 1 !important; translate: none !important; scale: none !important; }
+  .gs-slide { opacity: 1 !important; filter: none !important; scale: none !important; }
+  .gs-img { scale: none !important; }
+}

@@ -2,60 +2,229 @@
 
 ---
 
- <div class="py-12 bg-white contactContainer">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
-        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Contact Me</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Get in touch
-        </p>
-        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-          If you have any questions or inquiries, feel free to reach out to me. I'll get back to you as soon as possible!
-        </p>
+<!-- Tarjeta de cristal oscuro sobre el degradado de la página.
+     Los colores viven en variables CSS (bloque <style>) para poder ajustarlos en un solo lugar. -->
+<div class="contactContainer py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:text-center">
+      <h2 class="eyebrow text-base font-semibold tracking-wide uppercase">Contact Me</h2>
+      <p class="title mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">
+        Get in touch
+      </p>
+      <p class="lead mt-4 max-w-2xl text-xl lg:mx-auto">
+        If you have any questions or inquiries, feel free to reach out to me. I'll get back to you as soon as possible!
+      </p>
+    </div>
+    <div class="mt-10">
+      <div class="name-email">
+        <div>
+          <label for="name" class="label block text-sm font-medium">Your Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" class="field mt-1 block w-full sm:text-sm">
+        </div>
+        <div>
+          <label for="email" class="label block text-sm font-medium">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="email" class="field mt-1 block w-full sm:text-sm">
+        </div>
       </div>
-      <div class="mt-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-            <input type="text" id="name" name="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md border-2 border-slate-950">
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-            <input type="email" id="email" name="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md border-2 border-slate-950">
-          </div>
-        </div>
-        <div class="mt-6">
-          <label for="message" class="block text-sm font-medium text-gray-700 ">Message</label>
-          <textarea id="message" name="message" rows="5" class="mt-1 focus:ring-indigo-500 border-2 border-slate-950 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md " ></textarea>
-        </div>
-        <div class="mt-6">
-          <button class="bg-indigo-900 text-white hover:bg-gray-400 hover:text-gray-900 font-bold py-2 px-4 rounded-2xl">
-            Send message
-          </button>
-        </div>
+      <div class="mt-6">
+        <label for="message" class="label block text-sm font-medium">Message</label>
+        <textarea id="message" name="message" rows="5" class="field mt-1 block w-full sm:text-sm"></textarea>
+      </div>
+      <div class="mt-6">
+        <button class="cta">
+          Send message
+        </button>
       </div>
     </div>
   </div>
+</div>
 
 <style>
-
+/* ---------------------------------------------------------------------------
+   Paleta: misma familia que el fondo de la página (violeta profundo → azul noche)
+   con los acentos del banner (cian de las trazas y violeta/magenta del brillo).
+   --------------------------------------------------------------------------- */
 .contactContainer {
-    animation-timeline: view(block);
-    animation-name: shrink;
+  --accent: #46fff2; /* cian de las trazas del banner */
+  --accent-2: #a78bfa; /* violeta suave */
+  --text-strong: #f4f1fb;
+  --text: #cfc9e6;
+  --text-dim: #9d97b8;
+  --field-bg: rgba(8, 5, 18, 0.55);
+  --field-border: rgba(255, 255, 255, 0.14);
+
+  position: relative;
+  isolation: isolate;
+  color-scheme: dark; /* controles nativos (scroll del textarea, autocompletar) en oscuro */
+  color: var(--text);
+  border-radius: 1.5rem;
+  /* cristal esmerilado: deja ver el degradado de la página detrás */
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.025) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.65),
+    0 0 90px -25px rgba(138, 58, 140, 0.5), /* resplandor magenta, el mismo del fondo */
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  /* Animación por scroll: igual que antes, pero los extremos salen de variables para poder
+     ajustarlos por pantalla (en móvil, 40 % de ancho dejaba el formulario demasiado apretado) */
+  --w-from: 100%;
+  --w-to: calc(40% - 2.5px); /* escritorio: como antes */
+  --s-from: 0.6;
+  animation-timeline: view(block);
+  animation-name: shrink;
+}
+@media (max-width: 1024px) {
+  .contactContainer {
+    --w-to: calc(72% - 2.5px); /* tablet */
+    --s-from: 0.75;
+  }
+}
+@media (max-width: 640px) {
+  .contactContainer {
+    --w-to: 100%; /* móvil: ocupa todo el ancho; la animación sigue con escala y opacidad */
+    --s-from: 0.88;
+  }
+}
+
+/* Borde de degradado (violeta arriba-izquierda → cian abajo-derecha), como un filo de luz */
+.contactContainer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.6), transparent 35%, transparent 65%, rgba(70, 255, 242, 0.45));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.eyebrow {
+  color: var(--accent-2); /* respaldo */
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.title {
+  color: var(--text-strong);
+}
+.lead {
+  color: var(--text);
+}
+.label {
+  color: var(--text);
+}
+
+.field {
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 0.85rem;
+  color: var(--text-strong);
+  padding: 0.65rem 0.9rem;
+  resize: vertical;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.field::placeholder {
+  color: var(--text-dim);
+}
+.field:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(8, 5, 18, 0.75);
+  box-shadow: 0 0 0 3px rgba(70, 255, 242, 0.18), 0 0 24px -6px rgba(70, 255, 242, 0.45);
+}
+/* Autocompletar del navegador: sin el fondo blanco por defecto */
+.field:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-strong);
+  caret-color: var(--text-strong);
+  box-shadow: 0 0 0 1000px #120c22 inset;
+}
+
+.cta {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 55%, #2563eb 100%);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.7);
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+.cta:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px -8px rgba(124, 58, 237, 0.85), 0 0 30px -6px rgba(70, 255, 242, 0.35);
+}
+.cta:active {
+  transform: translateY(0) scale(0.98);
+}
+.cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 @keyframes shrink {
-    from {
-        width: 100%;
-        scale: 0.6;
-        opacity: 0.6;
-    }
-    to {
-        width: calc(40% - 2.5px);
-        scale: 1;
-        opacity: 1;
-    }
+  from {
+    width: var(--w-from);
+    scale: var(--s-from);
+    opacity: 0.6;
+  }
+  to {
+    width: var(--w-to);
+    scale: 1;
+    opacity: 1;
+  }
 }
 
+/* Nombre y email: en columna salvo en pantallas grandes. Se decide con la pantalla (no con el ancho de la
+   tarjeta) para que el diseño no salte mientras la tarjeta cambia de tamaño con el scroll. */
+.name-email {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 1200px) {
+  .name-email {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
+/* Móvil: textos y espacios más cómodos */
+@media (max-width: 640px) {
+  .contactContainer {
+    border-radius: 1.25rem;
+  }
+  .lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .field {
+    font-size: 1rem; /* 16px: evita el zoom automático de iOS al enfocar */
+    padding: 0.75rem 0.95rem;
+  }
+  .cta {
+    width: 100%; /* botón a todo lo ancho, más fácil de tocar */
+    padding: 0.8rem 1.4rem;
+  }
+}
+
+/* Quien pide menos movimiento no ve la animación de tamaño ni las transiciones */
+@media (prefers-reduced-motion: reduce) {
+  .contactContainer {
+    animation: none;
+  }
+  .field,
+  .cta {
+    transition: none;
+  }
+}
 </style>
