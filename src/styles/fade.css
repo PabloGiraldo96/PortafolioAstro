@@ -1,24 +1,53 @@
 /* Fade in / fade out compartido por todas las secciones (Games, Projects, Experience, Contact).
    Uso: añade  data-fade  (y opcionalmente  style="--i: 1"  para escalonar) a cualquier elemento.
-
-   POR QUÉ funciona igual en móvil y escritorio:
-   los rangos se miden en alto de pantalla (vh), no como % de la altura del elemento. Con % un bloque
-   largo (en móvil, un párrafo o una lista ocupan más que la pantalla) tardaba muchísimo en aparecer y
-   empezaba a desvanecerse mientras aún se leía. Con vh el comportamiento es el mismo para cualquier
-   altura:  entra mientras su borde superior sube por el 40 % inferior de la pantalla, y sale mientras
-   su borde inferior sube por el 30 % superior.                                                        */
+*/
 
 [data-fade] {
   --travel: 44px; /* recorrido vertical */
   --blur: 8px;
   will-change: opacity, translate, filter;
 }
+
 @media (max-width: 640px) {
   [data-fade] {
     --travel: 28px; /* en móvil: menos recorrido y menos blur (más ligero para la GPU) */
     --blur: 3px;
   }
 }
+
+/* Base (escritorio) */
+[data-fade] { --travel: 44px; --blur: 8px; --stagger: 4vh; }
+
+/* Tablets y portátiles pequeños: 641–1024 */
+@media (min-width: 641px) and (max-width: 1024px) {
+  [data-fade] { --travel: 36px; --blur: 6px; --stagger: 3.5vh; }
+}
+
+/* Móviles grandes (Pro Max, Plus, Ultra): 431–640 */
+@media (min-width: 431px) and (max-width: 640px) {
+  [data-fade] { --travel: 30px; --blur: 4px; --stagger: 3vh; }
+}
+
+/* Móviles estándar (iPhone normal/Pro, Pixel, Galaxy S): 360–430 */
+@media (min-width: 360px) and (max-width: 430px) {
+  [data-fade] { --travel: 26px; --blur: 3px; --stagger: 2.5vh; }
+}
+
+/* Móviles pequeños (iPhone SE, mini, Androids compactos): hasta 359 */
+@media (max-width: 359px) {
+  [data-fade] { --travel: 20px; --blur: 2px; --stagger: 2vh; }
+}
+
+/* Móvil en horizontal: poca altura, así que 4vh y 44px son demasiado */
+@media (max-height: 500px) and (orientation: landscape) {
+  [data-fade] { --travel: 16px; --blur: 2px; --stagger: 2vh; }
+}
+
+/* Dispositivos táctiles de cualquier ancho: sin blur (es lo más caro para la GPU) */
+@media (hover: none) and (pointer: coarse) {
+  [data-fade] { --blur: 0px; }
+}
+
 
 @keyframes fade-in {
   from { opacity: 0; translate: 0 var(--travel); filter: blur(var(--blur)); }
@@ -45,6 +74,9 @@
       cover var(--d) cover calc(40vh + var(--d)),
       cover calc(100% - 30vh) cover 100%;
   }
+
+
+  
   .fade-blob {
     animation: fade-blob linear both;
     animation-timeline: view();
