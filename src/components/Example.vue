@@ -172,10 +172,10 @@ onBeforeUnmount(() => {
 .tres-container {
   overflow-x: hidden;
   display: flex;
-  margin-bottom: -75px;
-  z-index: 1;
+  margin-bottom: -55px;
+  z-index: -1;
   width: 100%;
-  height: 60vh;
+  height: 85vh;
   /* El borde inferior se funde con el degradado de la página: sin corte entre banner y About */
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);

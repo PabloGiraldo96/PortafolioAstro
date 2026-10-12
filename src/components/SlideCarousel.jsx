@@ -35,10 +35,11 @@ export default function SlideCarousel({ slides }) {
   return (
     <div ref={rootRef} className="gs-root">
       <Swiper
-        spaceBetween={45}
+        spaceBetween={30}
+        
         slidesPerView={1}
         loop={true}
-        speed={reduceMotion ? 0 : 30}
+        speed={reduceMotion ? 0 : 2000}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         className="gs-swiper h-74 bg-black"
