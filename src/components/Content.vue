@@ -5,7 +5,7 @@ import ExplodingText from "./ExplodingText.vue";
 const FONT = "https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json";
 
 const loaded = await useTexture([
-  "https://imgs.search.brave.com/zA1iPh9oxiKVxzpe0-qCb2n_k5y9K7FLkOhoETFDy0M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzIzL2I5/L2E3LzIzYjlhN2Jk/NzcwNmU0Nzg5Zjgz/YWEwYWE2ODk3MGYx/LmpwZw",
+  "https://2aslefu7xi.ucarecd.net/ebcb63cd-37d6-40de-b4bd-d3469cda6500/thumbnail_7819c77a-cc93-49d1-b441-2db1443b34a0.png.1024x1024_q85.png",
 ]);
 const matcap = Array.isArray(loaded) ? loaded[0] : loaded;
 </script>

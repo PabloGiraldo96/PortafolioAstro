@@ -1,0 +1,11 @@
+---
+// Incluye el CSS y el plan B del fade. Ponlo una vez en cada sección (Astro no duplica ni el CSS ni el script).
+import "../styles/fade.css";
+---
+
+<!-- Sin JS no hay plan B: que el contenido nunca quede oculto -->
+<noscript>
+  <style>
+    [data-fade] { opacity: 1 !important; translate: none !important; filter: none !important; }
+  </style>
+</noscript>
