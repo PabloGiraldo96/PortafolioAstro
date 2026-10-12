@@ -5,8 +5,6 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "../styles/gamesSwiper.css"; // después de los CSS de Swiper, para poder ajustarlos
 
-// Plan B del fade in/out del carrusel para navegadores sin `animation-timeline: view()`.
-// Si hay soporte, no hace nada: el CSS se encarga solo.
 function useScrollFade() {
   const ref = useRef(null);
   useEffect(() => {
@@ -27,15 +25,6 @@ function useScrollFade() {
   return ref;
 }
 
-/**
- * Carrusel con las animaciones suaves (fade in/out por scroll, crossfade entre slides,
- * zoom de asentamiento y título con fade al hacer hover).
- *
- * slides: [{ href, label, alt?, src, title?, titleClass?, top? }]
- *   - label  -> aria-label del enlace      - alt -> texto alternativo (por defecto = label)
- *   - title  -> texto que aparece en el hover (si no hay, la slide no se oscurece)
- *   - top    -> margen superior de la imagen ("mt-6" por defecto)
- */
 export default function SlideCarousel({ slides }) {
   const rootRef = useScrollFade();
   // Se calcula una vez (el componente se monta solo en el cliente, con client:only)
@@ -46,10 +35,10 @@ export default function SlideCarousel({ slides }) {
   return (
     <div ref={rootRef} className="gs-root">
       <Swiper
-        spaceBetween={30}
+        spaceBetween={45}
         slidesPerView={1}
         loop={true}
-        speed={reduceMotion ? 0 : 900}
+        speed={reduceMotion ? 0 : 30}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         className="gs-swiper h-74 bg-black"

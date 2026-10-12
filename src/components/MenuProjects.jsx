@@ -5,7 +5,9 @@ const SLIDES = [
     href: "https://oghouseweb.com/",
     label: "OGHouse",
     src: "https://ucarecdn.com/6b5035a5-875f-4774-83e8-173af7d0d967/Captura%20de%20pantalla%202025-03-11%20142235.png",
-    top: "mt-6", // sin título: la slide no se oscurece al hacer hover
+    top: "mt-6", 
+    title: "Frontend Development",
+    titleClass: "firstTitle",
   },
   {
     href: "https://study-room-chi.vercel.app/",

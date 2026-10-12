@@ -1,13 +1,13 @@
 <script setup>
-import { useTexture } from "@tresjs/core";
 import ExplodingText from "./ExplodingText.vue";
 
-const FONT = "https://raw.githubusercontent.com/Tresjs/assets/main/fonts/FiraCodeRegular.json";
-
-const loaded = await useTexture([
-  "https://2aslefu7xi.ucarecd.net/ebcb63cd-37d6-40de-b4bd-d3469cda6500/thumbnail_7819c77a-cc93-49d1-b441-2db1443b34a0.png.1024x1024_q85.png",
-]);
-const matcap = Array.isArray(loaded) ? loaded[0] : loaded;
+// Ya no hay `await` aquí: los textos aparecen en cuanto está la fuente (que se pide al cargar el módulo).
+// La textura matcap llega después y se cambia sola. Para que llegue casi al instante, usa una versión chica:
+//   · 256×256 es más que suficiente para un matcap (el archivo de 1024×1024 pesa varias veces más)
+//   · si es Uploadcare, puedes pedirla ya redimensionada y en webp añadiendo a la URL la ruta
+//     /-/resize/256x256/-/format/webp/   (compruébalo en tu panel; no pude probarlo desde aquí)
+const MATCAP_URL =
+  "https://2aslefu7xi.ucarecd.net/ebcb63cd-37d6-40de-b4bd-d3469cda6500/-/preview/1000x1000/";
 </script>
 
 <template>
@@ -17,8 +17,7 @@ const matcap = Array.isArray(loaded) ? loaded[0] : loaded;
     text="Juan Pablo Jaramillo Giraldo"
     :position="[-5, 0, 85]"
     :size="11"
-    :font="FONT"
-    :matcap="matcap"
+    :matcap-url="MATCAP_URL"
     color="#FFD166"
     point-color="#FFD166"
     :thickness="1.2"
@@ -28,10 +27,11 @@ const matcap = Array.isArray(loaded) ? loaded[0] : loaded;
     text="3D Web Animations"
     :position="[-215, 45, -60]"
     :size="25"
-    :font="FONT"
-    :matcap="matcap"
+    :matcap-url="MATCAP_URL"
     point-color="#4de1ff"
     :thickness="1"
     :count="20000"
   />
 </template>
+
+

@@ -1,17 +1,17 @@
 ---
-
+import FadeKit from "./FadeKit.astro";
 ---
-
 <!-- Tarjeta de cristal oscuro sobre el degradado de la página.
      Los colores viven en variables CSS (bloque <style>) para poder ajustarlos en un solo lugar. -->
 <div class="contactContainer py-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="lg:text-center">
+      <h2 class="eyebrow text-base font-semibold tracking-wide uppercase">Contact Me</h2>
       <p class="title mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">
-        Let's have a quick chat
+        Get in touch
       </p>
       <p class="lead mt-4 max-w-2xl text-xl lg:mx-auto">
-        If you have any 3d or Frontend ideas to apply on your projects we can work on something! Hit my inbox and I'll contacting you as soon as possible. 
+        If you have any questions or inquiries, feel free to reach out to me. I'll get back to you as soon as possible!
       </p>
     </div>
     <div class="mt-10">
@@ -37,7 +37,7 @@
     </div>
   </div>
 </div>
-
+ 
 <style>
 /* ---------------------------------------------------------------------------
    Paleta: misma familia que el fondo de la página (violeta profundo → azul noche)
@@ -51,7 +51,7 @@
   --text-dim: #9d97b8;
   --field-bg: rgba(8, 5, 18, 0.55);
   --field-border: rgba(255, 255, 255, 0.14);
-
+ 
   position: relative;
   isolation: isolate;
   color-scheme: dark; /* controles nativos (scroll del textarea, autocompletar) en oscuro */
@@ -65,7 +65,7 @@
     0 30px 80px -30px rgba(0, 0, 0, 0.65),
     0 0 90px -25px rgba(138, 58, 140, 0.5), /* resplandor magenta, el mismo del fondo */
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-
+ 
   /* Animación por scroll: igual que antes, pero los extremos salen de variables para poder
      ajustarlos por pantalla (en móvil, 40 % de ancho dejaba el formulario demasiado apretado) */
   --w-from: 100%;
@@ -86,7 +86,7 @@
     --s-from: 0.88;
   }
 }
-
+ 
 /* Borde de degradado (violeta arriba-izquierda → cian abajo-derecha), como un filo de luz */
 .contactContainer::before {
   content: "";
@@ -101,7 +101,7 @@
   mask-composite: exclude;
   pointer-events: none;
 }
-
+ 
 .eyebrow {
   color: var(--accent-2); /* respaldo */
   background: linear-gradient(90deg, var(--accent-2), var(--accent));
@@ -118,7 +118,7 @@
 .label {
   color: var(--text);
 }
-
+ 
 .field {
   background: var(--field-bg);
   border: 1px solid var(--field-border);
@@ -146,7 +146,7 @@
   caret-color: var(--text-strong);
   box-shadow: 0 0 0 1000px #120c22 inset;
 }
-
+ 
 .cta {
   background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 55%, #2563eb 100%);
   color: #fff;
@@ -170,7 +170,7 @@
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-
+ 
 @keyframes shrink {
   from {
     width: var(--w-from);
@@ -183,7 +183,7 @@
     opacity: 1;
   }
 }
-
+ 
 /* Nombre y email: en columna salvo en pantallas grandes. Se decide con la pantalla (no con el ancho de la
    tarjeta) para que el diseño no salte mientras la tarjeta cambia de tamaño con el scroll. */
 .name-email {
@@ -196,7 +196,7 @@
     grid-template-columns: 1fr 1fr;
   }
 }
-
+ 
 /* Móvil: textos y espacios más cómodos */
 @media (max-width: 640px) {
   .contactContainer {
@@ -215,7 +215,7 @@
     padding: 0.8rem 1.4rem;
   }
 }
-
+ 
 /* Quien pide menos movimiento no ve la animación de tamaño ni las transiciones */
 @media (prefers-reduced-motion: reduce) {
   .contactContainer {
@@ -227,3 +227,4 @@
   }
 }
 </style>
+ 
