@@ -1,0 +1,72 @@
+/* ============================================================================================
+  
+   ============================================================================================ */
+
+:root {
+  /* violeta profundo → azul noche, con luminosidad parecida: no hay saltos de tono */
+  --bg-0: #0c050f; /* inicio: igual al clearColor del banner */
+  --bg-1: #130a1f;
+  --bg-2: #1a0f2e;
+  --bg-3: #17142f;
+  --bg-4: #121830;
+  --bg-5: #0b1020; /* final: contacto / pie */
+  --glow-violet: rgba(138, 58, 140, 0.34);
+  --glow-cyan: rgba(70, 255, 242, 0.09);
+}
+
+html {
+  background: var(--bg-5); /* lo que se ve al "rebotar" el scroll abajo */
+}
+/* Los resplandores anchos no deben crear scroll horizontal. `clip` (no `hidden`) no rompe sticky ni el scroll suave. */
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(min(60rem, 140vw) 38rem at 14% 14%, var(--glow-violet), transparent 70%),
+    radial-gradient(min(52rem, 130vw) 34rem at 88% 40%, var(--glow-cyan), transparent 70%),
+    radial-gradient(min(60rem, 140vw) 38rem at 18% 74%, rgba(138, 58, 140, 0.2), transparent 70%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 10%, var(--bg-2) 28%, var(--bg-3) 50%, var(--bg-4) 72%, var(--bg-5) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* ---- Secciones ---------------------------------------------------------------------------
+   · fondo transparente: se ve el degradado de la página (solo el COLOR: un background-image propio se conserva)
+   · overflow visible: el resplandor ya no se corta en el borde, se difumina de forma natural hacia la sección vecina
+   Se aplican por id (así no hay que tocar cada componente) y por la clase .flow para cualquier otra sección. */
+#games,
+#projects,
+#experience,
+#studies,
+#contact,
+.flow {
+  background-color: transparent !important;
+  overflow: visible !important;
+}
+
+/* ---- Variante: una sección que SÍ debe conservar un color propio (p. ej. la pizarra de Studies) ----
+   El color pasa a una capa detrás, con los bordes superior e inferior difuminados hacia el degradado.
+   Uso:  <div id="studies" class="flow-panel" style="--panel-bg:#18181b; --panel-fade:16%"> … </div>  */
+.flow-panel {
+  position: relative;
+  isolation: isolate;
+  background-color: transparent !important;
+  overflow: visible !important;
+}
+.flow-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--panel-bg, #18181b);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--panel-fade, 14%), #000 calc(100% - var(--panel-fade, 14%)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--panel-fade, 14%), #000 calc(100% - var(--panel-fade, 14%)), transparent 100%);
+}
